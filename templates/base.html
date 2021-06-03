@@ -3,6 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+
+    <script
+    src="http://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+    
     <title>
       {% block title %}{% endblock %}
     </title>
@@ -10,14 +17,9 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% for msg in get_flashed_messages() %}
-      <p class="flash-msg">
-        {{ msg }}
-      </p>
-    {% endfor %}
 
     {% block body %}{% endblock %}
-
     {% block after_body %}{% endblock %}
+    <script src="/static/js/mme.js"></script>
   </body>
 </html>

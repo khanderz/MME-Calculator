@@ -1,9 +1,21 @@
-{% extends 'base.html' %}
-{% block title %}Morphine Milligram Equivalent (MME) Calculator Home{% endblock %}
 
-{% block body %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MME Calculator</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script
+      src="http://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"></script>
+  </head>
+
+  <body>
   <h1>Morphine Milligram Equivalent (MME) Calculator</h1>
   
+  <main>
   <div class="input-title">Drug</div>
     <form>
       <select name="drug" id="drug">
@@ -32,7 +44,7 @@
 
     <div class="input-title">Quantity</div>
     <form>
-      <input type="text" id="quantity>
+      <input type="text" id="quantity">
     </form>
 
     <div class="input-title">Days Supply</div>
@@ -40,7 +52,30 @@
       <input type="text" id="days_supply">
     </form>
 
+    <button class="add-to-list">
+      Add to medication list
+    </button>
+
+    <section id="your-medList">
+      <h1>Medication list</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Medications</th>
+          </tr>
+        </thead>
+
+        <tbody id="med-list"></tbody>
+      </table>
 
 
+      <h2>
+        <div>
+          Total MME: <span id="mme-total">0.00</span>
+        </div>     
+      </main>
 
-{% endblock %}
+    <script src="/static/js/mme.js"></script>
+  </body>
+</html>
