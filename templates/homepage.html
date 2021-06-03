@@ -2,7 +2,45 @@
 {% block title %}Morphine Milligram Equivalent (MME) Calculator Home{% endblock %}
 
 {% block body %}
-  <h1>Welcome!</h1>
+  <h1>Morphine Milligram Equivalent (MME) Calculator</h1>
+  
+  <div class="input-title">Drug</div>
+    <form>
+      <select name="drug" id="drug">
+        <option>Codeine</option>
+        <option>Fentanyl transdermal</option>
+        <option>Fentanyl buccal/sublingual/lozenge</option>
+        <option>Fentanyl film/oral spray</option>
+        <option>Fentanyl nasal spray</option>
+        <option>Hydrocodone</option>
+        <option>Hydromorphone</option>
+        <option>Methadone 1-20mg</option>
+        <option>Methadone 21-40mg</option>
+        <option>Methadone 41-60mg</option>
+        <option>Methadone 61-80mg</option>
+        <option>Morphine</option>
+        <option>Oxycodone</option>
+        <option>Oxymorphone</option>
+        <option>Tapentadol</option>
+      </select>
+    </form>
+
+    <div class="input-title">Dose</div>
+    <form>
+      <input type="text" id="dose">
+    </form>
+
+    <div class="input-title">Quantity</div>
+    <form>
+      <input type="text" id="quantity>
+    </form>
+
+    <div class="input-title">Days Supply</div>
+    <form>
+      <input type="text" id="days_supply">
+    </form>
+
+
 
 
 {% endblock %}
