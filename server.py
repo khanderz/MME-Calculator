@@ -3,6 +3,7 @@
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from model import connect_to_db
+import crud
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -22,10 +23,9 @@ def addMed():
     quantity = request.args.get('quantity')
     days_supply = request.args.get('days_supply')
 
-    # MME = crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply) 
+    MME = crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply) 
 
-    # return MME
-    return render_template('results.html', drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)
+    return render_template('results.html', drug=drug, dose=dose, quantity=quantity, days_supply=days_supply, MME=MME)
 
 if __name__ == '__main__':
     connect_to_db(app)
