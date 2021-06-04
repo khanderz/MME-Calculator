@@ -14,7 +14,7 @@ def homepage():
 
     return render_template('homepage.html') 
 
-@app.route('/medlist')
+@app.route('/results')
 def addMed():
 
     drug = request.args.get('drug')
@@ -25,8 +25,7 @@ def addMed():
     # MME = crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply) 
 
     # return MME
-    return drug
-    print(drug)
+    return render_template('results.html', drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)
 
 if __name__ == '__main__':
     connect_to_db(app)
