@@ -18,7 +18,7 @@
   <main>
   <div class="input-title">Drug</div>
     <form>
-      <select name="drug" id="drug">
+      <select name="drug" name="drug">
         <option>Codeine</option>
         <option>Fentanyl transdermal</option>
         <option>Fentanyl buccal/sublingual/lozenge</option>
@@ -35,21 +35,15 @@
         <option>Oxymorphone</option>
         <option>Tapentadol</option>
       </select>
-    </form>
 
     <div class="input-title">Dose</div>
-    <form>
-      <input type="text" id="dose">
-    </form>
+      <input type="text" name="dose">
 
     <div class="input-title">Quantity</div>
-    <form>
-      <input type="text" id="quantity">
-    </form>
+      <input type="text" name="quantity">
 
     <div class="input-title">Days Supply</div>
-    <form>
-      <input type="text" id="days_supply">
+      <input type="text" name="days_supply">
     </form>
 
     <button class="add-to-list">
@@ -76,6 +70,5 @@
         </div>     
       </main>
 
-    <script src="/static/js/mme.js"></script>
   </body>
 </html>
