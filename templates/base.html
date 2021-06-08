@@ -3,17 +3,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+
     <title>MME Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     
     <title>
       {% block title %}{% endblock %}
     </title>
 
-    {% block head %}{% endblock %}
+      {% block head %}{% endblock %}
   </head>
+
   <body>
 
-    {% block body %}{% endblock %}
-    {% block after_body %}{% endblock %}
+      <ul>
+      <!-- Allow each page access to stored session flash messages -->
+        {% for msg in get_flashed_messages() %}
+          <p class="flash-msg">
+           {{ msg }}
+          </p>
+        {% endfor %}
+      </ul>
+
+
+    {% block body %}
+    {% endblock %}
+    
+     {% block after_body %}
+      <form action="/logout">
+        Click to log out of your account:
+          <button type="submit" name="logout">
+            Log Out
+        </button>
+      </form>
+    {% endblock %}
+
+    <script src="/static/js/mme.js"></script>
+
   </body>
+
 </html>
