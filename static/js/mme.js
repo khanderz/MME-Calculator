@@ -39,3 +39,13 @@ const populateMME = (results) => {
   $('#mme-total').html(results.MME);
   };
 
+// login-logout button
+  // document.querySelector('#login-button').addEventListener('click', (evt) => {
+  //   const loginBtn = evt.target;
+  //   console.log(evt.target);
+  
+  //   if (loginBtn.innerHTML === 'Log In') {
+  //     loginBtn.innerHTML = 'Log Out';
+  //   } else {
+  //     loginBtn.innerHTML = 'Log In';
+  //   }

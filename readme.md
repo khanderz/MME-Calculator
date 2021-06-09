@@ -8,6 +8,6 @@ There is no completely safe opioid dose, and this calculator does not substitute
 Features:
 
 Install:
+git clone https://github.com/khanderz/MME-Calculator.git
 
-Docs:
-
+Usage:

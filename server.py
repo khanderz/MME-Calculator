@@ -45,10 +45,15 @@ def login():
 
     user = crud.get_user_by_email_and_password(email, password)
 
+    print("~"*20)
+    print(session)
+
     if user:
         session["user_email"] = user.email
         session["user_id"] = user.user_id
-        flash(f"Welcome back, {user.email}! You are now logged in.")
+        print("~"*20)
+        print(session)
+        flash(f"Hello {user.email}! You are now logged in.")
     else:
         flash("Please enter the correct email and password or create a new account.")
 
@@ -58,23 +63,20 @@ def login():
 def logout():
     """Allow a logged in user to logout."""
 
+    print("~"*20)
+    print(session)
+
     if session:
         session.pop("user_id")
         session.pop("user_email")
+        print("~"*20)
+        print(session)
         flash("You are now logged out.")
 
     else:
         flash("You are not currently logged in.")
     
     return redirect('/')   
-
-@app.route('/all_users')
-def all_users():
-    """Show all users by calling get_users function."""
-
-    users = crud.get_users()
-
-    return render_template('all_users.html', users=users)
 
 @app.route('/users/<user_id>')
 def show_user(user_id):
@@ -88,12 +90,23 @@ def show_user(user_id):
 @app.route('/results')
 def addMed():
 
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)    
+
     drug = request.args.get('drug')
     dose = request.args.get ('dose')
     quantity = request.args.get('quantity')
     days_supply = request.args.get('days_supply')
 
     MME = float(crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)) 
+
+    if session:
+        session["user_drug"] = user.drug
+        session["user_dose"] = user.dose
+        session["user_quantity"] = user.quantity
+        session["user_days_supply"] = user.days_supply
+        session["user_MME"] = user.MME
+    
 
     return jsonify({'MME': MME})
     # return render_template('homepage.html', MME=MME) 

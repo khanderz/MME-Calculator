@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.email }} - Details{% endblock %}
+
+{% block body %}
+<h1>{{ user.email }}</h1>
+<p>
+    <h4>User ID: {{ user.user_id }}</h4>
+</p>
+<p>
+    <h4>Medication lists by {{ user.email }}:</h4>
+    {% if med_list.user %}
+        {% for drug in med_list.user %}
+            <li>Drug: {{ drug.opioid }}</li>
+            <br>
+        {% endfor %}
+    {% else %}
+        <li>No Medication lists by this User </li>
+    {% endif %}
+<br>
+</p>
+{% endblock %}
