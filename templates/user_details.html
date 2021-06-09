@@ -9,14 +9,16 @@
 </p>
 <p>
     <h4>Medication lists by {{ user.email }}:</h4>
-    {% if med_list.user %}
-        {% for drug in med_list.user %}
-            <li>Drug: {{ drug.opioid }}</li>
+    {% if user.med_list %}
+        {% for drug in user.med_list %}
+            <li>Drug: {{ drug.opioid.drug_dose }}</li>
             <br>
         {% endfor %}
     {% else %}
-        <li>No Medication lists by this User </li>
+        <li>No medication lists by this user </li>
     {% endif %}
 <br>
 </p>
+
+Return to homepage <a href="/">here</a>
 {% endblock %}

@@ -106,6 +106,8 @@ def addMed():
         session["user_quantity"] = user.quantity
         session["user_days_supply"] = user.days_supply
         session["user_MME"] = user.MME
+        print("~"*20)
+        print(session)
     
 
     return jsonify({'MME': MME})
