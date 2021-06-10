@@ -132,13 +132,32 @@ def add():
     # drug_dose = db.Column(db.Integer)
     # quantity = db.Column(db.Integer)
     # days_supply = db.Column(db.Integer)
-    # daily_MME = db.Column(db.Integer)
-    # date_filled = db.Column(db.DateTime)   
+    # daily_MME = db.Column(db.Integer)  
+
+    drug_dose = decimal.Decimal(request.args.get('dose', 0))
+    quantity = decimal.Decimal(request.args.get('quantity', 0))
+    days_supply = decimal.Decimal(request.args.get('days_supply', 0))
+
+    MME = crud.calculate_MME(
+        drug=opioid,
+        dose=drug_dose,
+        quantity=quantity,
+        days_supply=days_supply,
+    )
+
+    new_med = crud.add_med_to_med_list(
+        drug_dose=drug_dose, 
+        quantity=quantity, 
+        days_supply=days_supply, 
+        daily_MME=MME,
+    )
     
     # user.med_list.append(new_med)
+    user.med_list.append(new_med)
     
     # return redirect to homepage
-    return redirect('/')  
+    # return redirect('/') 
+    return render_template('homepage.html', drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
 
 
 @app.route('/api/calculate-mme')

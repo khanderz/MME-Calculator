@@ -33,8 +33,9 @@
 
     <div class="input-title">Days Supply</div>
       <input type="text" name="days_supply" id="days-supply-field">
-
+    </form>
     
+    <form action='/add' method="POST">
     <button class="add-to-list">
       Add to medication list
     </button>
@@ -46,6 +47,9 @@
         <thead>
           <tr>
             <th>Medications</th>
+            {% for drug in get_meds() %}
+            <td> {{drug}} {{drug_dose}} {{quantity}} {{days_supply}} {{MME}}</td>
+            {% endfor %}
           </tr>
         </thead>
 

@@ -41,14 +41,26 @@ def get_user_by_email_and_password(email, password):
     else:
         return None
     
-
+# MME and drug functions
 def get_opioid_by_name(opioid_name):
     """Return `Opioid` with the given `opioid_name`."""
     
     return Opioid.query.filter_by(opioid_name=opioid_name).first()
 
+def add_med_to_med_list(drug_dose, quantity, days_supply, daily_MME):
+    """add `Med` to user's med_list."""
 
-# MME and drug functions
+    med = Med(
+        drug_dose=drug_dose, 
+        quantity=quantity, 
+        days_supply=days_supply, 
+        daily_MME=daily_MME)
+
+    db.session.add(med)
+    db.session.commit()
+
+    return med
+
 def calculate_MME(drug, dose, quantity, days_supply): 
     """Calculate MME with unqiue conversion factor from db for specific drug.
     
@@ -68,6 +80,11 @@ def calculate_MME(drug, dose, quantity, days_supply):
     MME = dose * (quantity // days_supply) * opioid.conversion_factor
 
     return MME
+
+def get_meds():
+    """view all meds in med list"""
+
+    return Med.query.all()    
 
 
 if __name__ == '__main__':

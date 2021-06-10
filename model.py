@@ -36,7 +36,7 @@ class Med(db.Model):
     drug_dose = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     days_supply = db.Column(db.Integer)
-    daily_MME = db.Column(db.Integer)
+    daily_MME = db.Column(db.Numeric)
     date_filled = db.Column(db.DateTime)   
 
     opioid = db.relationship("Opioid", backref="med")                 
