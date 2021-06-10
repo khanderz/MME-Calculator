@@ -4,11 +4,13 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from model import connect_to_db
 import crud
+import decimal
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+
 
 #app routes and view functions
 @app.route('/')
@@ -100,18 +102,61 @@ def addMed():
 
     MME = float(crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)) 
 
-    if session:
-        session["user_drug"] = user.drug
-        session["user_dose"] = user.dose
-        session["user_quantity"] = user.quantity
-        session["user_days_supply"] = user.days_supply
-        session["user_MME"] = user.MME
-        print("~"*20)
-        print(session)
+    # if session:
+    #     session["user_drug"] = user.drug
+    #     session["user_dose"] = user.dose
+    #     session["user_quantity"] = user.quantity
+    #     session["user_days_supply"] = user.days_supply
+    #     session["user_MME"] = user.MME
+    #     print("~"*20)
+    #     print(session)
     
 
     return jsonify({'MME': MME})
     # return render_template('homepage.html', MME=MME) 
+    # return MME
+
+@app.route('/add', methods=['POST'])
+def add():
+    """Add new `Med` to user.med_list"""
+    
+    # Query for logged in `User` obj from db
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email) 
+
+    # Query for `Opioid` from db, by drug name (from request.form)
+    drug = request.form.get('drug')
+    opioid = crud.get_opioid_by_name(opioid_name=drug)
+    
+    # Create `Med` object, `Med` attributes:
+    # drug_dose = db.Column(db.Integer)
+    # quantity = db.Column(db.Integer)
+    # days_supply = db.Column(db.Integer)
+    # daily_MME = db.Column(db.Integer)
+    # date_filled = db.Column(db.DateTime)   
+    
+    # user.med_list.append(new_med)
+    
+    # return redirect to homepage
+    return redirect('/')  
+
+
+@app.route('/api/calculate-mme')
+def calculate_mme():
+    drug = request.args.get('drug')
+
+    dose = decimal.Decimal(request.args.get('dose', 0))
+    quantity = decimal.Decimal(request.args.get('quantity', 0))
+    days_supply = decimal.Decimal(request.args.get('days_supply', 0))
+   
+    MME = crud.calculate_MME(
+        drug=drug,
+        dose=dose,
+        quantity=quantity,
+        days_supply=days_supply,
+    )
+
+    return jsonify({'value': float(MME)})
 
 if __name__ == '__main__':
     connect_to_db(app)

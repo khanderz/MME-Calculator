@@ -24,6 +24,8 @@ const resetList = () => {
     $('#med-list').empty();
   };
 
+// calculate MME
+// const calculateMME = () => {} 
 
 
 // const incrementMMETotal = (MME) => {
@@ -35,9 +37,20 @@ const resetList = () => {
 //   mmeTotal.html(total.toFixed(2));
 // };
 
+
+// populate MME from server.py
 const populateMME = (results) => {
-  $('#mme-total').html(results.MME);
+  $('#mme-total').html(results);
+  alert(results)
   };
+
+const showMME = (evt) => {
+    $.get('/results', populateMME);
+  };  
+
+$.get('/results', (res) => {
+  alert(res)
+})  
 
 // login-logout button
   // document.querySelector('#login-button').addEventListener('click', (evt) => {

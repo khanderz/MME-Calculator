@@ -40,25 +40,35 @@ def get_user_by_email_and_password(email, password):
             return user
     else:
         return None
+    
+
+def get_opioid_by_name(opioid_name):
+    """Return `Opioid` with the given `opioid_name`."""
+    
+    return Opioid.query.filter_by(opioid_name=opioid_name).first()
 
 
 # MME and drug functions
 def calculate_MME(drug, dose, quantity, days_supply): 
-    """Calculate MME with unqiue conversion factor from db for specific drug."""       
+    """Calculate MME with unqiue conversion factor from db for specific drug.
+    
+    Args:
+        - drug (str): the name of a drug (must be present in database)
+        - dose (decimal.Decimal)
+        - quantity (decimal.Decimal)
+        - days_supply (decimal.Decimal)
+    """
+    
+    if not dose or not quantity or not days_supply:
+        return 0
 
-    conversion_factor = db.session.query(Opioid.conversion_factor).where(drug == Opioid.opioid_name).first()
-    dose = decimal.Decimal(dose)
-    quantity = decimal.Decimal(quantity)
-    days_supply = decimal.Decimal(days_supply)
+    # Get `Opioid` from database to get its conversion factor
+    opioid = get_opioid_by_name(drug)
 
-    for row in conversion_factor:
-        MME = dose * (quantity/days_supply) * row
-        return MME
-
-    db.session.add(MME)
-    db.session.commit()
+    MME = dose * (quantity // days_supply) * opioid.conversion_factor
 
     return MME
+
 
 if __name__ == '__main__':
     from server import app

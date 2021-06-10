@@ -11,7 +11,7 @@
     <h4>Medication lists by {{ user.email }}:</h4>
     {% if user.med_list %}
         {% for drug in user.med_list %}
-            <li>Drug: {{ drug.opioid.drug_dose }}</li>
+            <li>Drug: {{ drug.opioid.opioid_name }}</li>
             <br>
         {% endfor %}
     {% else %}
