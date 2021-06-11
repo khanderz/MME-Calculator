@@ -2,7 +2,7 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-from model import connect_to_db
+from model import connect_to_db, User
 import crud
 import decimal
 from jinja2 import StrictUndefined
@@ -16,8 +16,18 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage."""
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    # drug = ""
 
-    return render_template('homepage.html') 
+    # drug_dose = ""
+    # quantity = ""
+    # days_supply = ""
+
+    # MME = ""
+
+    # return render_template('homepage.html', user=user, drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
+    return render_template('homepage.html', user=user)
 
 # User routes
 @app.route('/user_reg', methods=['POST'])
@@ -91,16 +101,18 @@ def show_user(user_id):
 # MME and drug routes
 @app.route('/results')
 def addMed():
-
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)    
+    """ add med for non-logged in users"""
 
     drug = request.args.get('drug')
-    dose = request.args.get ('dose')
-    quantity = request.args.get('quantity')
-    days_supply = request.args.get('days_supply')
+    dose = decimal.Decimal(request.args.get('dose'))
+    quantity = decimal.Decimal(request.args.get('quantity'))
+    days_supply = decimal.Decimal(request.args.get('days_supply'))
+
+    print('^^^^^^^^^^', drug, dose, quantity, days_supply, '^^^^^^^^^^')
 
     MME = float(crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)) 
+
+    print(MME, "*"*20)
 
     # if session:
     #     session["user_drug"] = user.drug
@@ -115,50 +127,67 @@ def addMed():
     return jsonify({'MME': MME})
     # return render_template('homepage.html', MME=MME) 
     # return MME
+    # return render_template('homepage.html')
 
 @app.route('/add', methods=['POST'])
 def add():
     """Add new `Med` to user.med_list"""
-    
+    if "user_id" in session:
     # Query for logged in `User` obj from db
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email) 
+        user = User.query.get(session['user_id'])
+        print(user)
+        print("~"*20)
 
     # Query for `Opioid` from db, by drug name (from request.form)
-    drug = request.form.get('drug')
-    opioid = crud.get_opioid_by_name(opioid_name=drug)
+        drug = request.form.get('drug')
+        opioid = crud.get_opioid_by_name(opioid_name=drug)
     
+        print(drug)
+        print("*"*20)
+        print(opioid)
+
     # Create `Med` object, `Med` attributes:
     # drug_dose = db.Column(db.Integer)
     # quantity = db.Column(db.Integer)
     # days_supply = db.Column(db.Integer)
     # daily_MME = db.Column(db.Integer)  
 
-    drug_dose = decimal.Decimal(request.args.get('dose', 0))
-    quantity = decimal.Decimal(request.args.get('quantity', 0))
-    days_supply = decimal.Decimal(request.args.get('days_supply', 0))
+        drug_dose = decimal.Decimal(request.form.get('dose', 0))
+        quantity = decimal.Decimal(request.form.get('quantity', 0))
+        days_supply = decimal.Decimal(request.form.get('days_supply', 0))
+        print(drug_dose, quantity, days_supply, '#######FORM INPUT#######')
 
-    MME = crud.calculate_MME(
-        drug=opioid,
-        dose=drug_dose,
-        quantity=quantity,
-        days_supply=days_supply,
-    )
+        MME = crud.calculate_MME(
+            drug=drug,
+            dose=drug_dose,
+            quantity=quantity,
+            days_supply=days_supply,
+        )
 
-    new_med = crud.add_med_to_med_list(
-        drug_dose=drug_dose, 
-        quantity=quantity, 
-        days_supply=days_supply, 
-        daily_MME=MME,
-    )
-    
-    # user.med_list.append(new_med)
-    user.med_list.append(new_med)
-    
-    # return redirect to homepage
-    # return redirect('/') 
-    return render_template('homepage.html', drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
+        print(MME)
 
+        new_med = crud.add_med(
+            drug,
+            drug_dose, 
+            quantity, 
+            days_supply, 
+            MME
+        )
+        
+        # user.med_list.append(new_med)
+        user.med_list.append(new_med)
+
+        print(user.med_list)
+        print("~"*20)
+
+        # db.session.add(user)
+        # db.session.commit()
+
+        # return redirect to homepage
+        return jsonify({'msg': 'medication added'}), 200
+        # ('homepage.html', user=user, drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
+    else:
+        return jsonify("unauthorized")
 
 @app.route('/api/calculate-mme')
 def calculate_mme():

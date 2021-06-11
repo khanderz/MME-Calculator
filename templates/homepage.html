@@ -6,39 +6,38 @@
 
   <main>
   <div class="input-title">Drug</div>
-    <form action='/results'>
-      <select name="drug" name="drug" id="drug-field">
-        <option>Codeine</option>
-        <option>Fentanyl transdermal</option>
-        <option>Fentanyl buccal/sublingual/lozenge</option>
-        <option>Fentanyl film/oral spray</option>
-        <option>Fentanyl nasal spray</option>
-        <option>Hydrocodone</option>
-        <option>Hydromorphone</option>
-        <option>Methadone 1-20mg</option>
-        <option>Methadone 21-40mg</option>
-        <option>Methadone 41-60mg</option>
-        <option>Methadone 61-80mg</option>
-        <option>Morphine</option>
-        <option>Oxycodone</option>
-        <option>Oxymorphone</option>
-        <option>Tapentadol</option>
+    <form name="drug-form" id="drug-form">
+      <select name="drug" id="drug">
+        <option value="Codeine">Codeine</option>
+        <option value="Fentanyl transdermal">Fentanyl transdermal</option>
+        <option value="Fentanyl buccal/sublingual/lozenge">Fentanyl buccal/sublingual/lozenge</option>
+        <option value="Fentanyl film/oral spray">Fentanyl film/oral spray</option>
+        <option value="Fentanyl nasal spray">Fentanyl nasal spray</option>
+        <option value="Hydrocodone">Hydrocodone</option>
+        <option value="Hydrocodone">Hydromorphone</option>
+        <option value="Methadone 1-20mg">Methadone 1-20mg</option>
+        <option value="Methadone 21-40mg">Methadone 21-40mg</option>
+        <option value="Methadone 41-60mg">Methadone 41-60mg</option>
+        <option value="Methadone 61-80mg">Methadone 61-80mg</option>
+        <option value="Morphine">Morphine</option>
+        <option value="Oxycodone">Oxycodone</option>
+        <option value="Oxymorphone">Oxymorphone</option>
+        <option value="Tapentadol">Tapentadol</option>
       </select>
 
     <div class="input-title">Total Daily Dose</div>
-      <input type="text" name="dose" id="dose-field">
+      <input type="text" name="dose" id="dose">
 
     <div class="input-title">Quantity</div>
-      <input type="text" name="quantity" id="quantity-field">
+      <input type="text" name="quantity" id="quantity">
 
     <div class="input-title">Days Supply</div>
-      <input type="text" name="days_supply" id="days-supply-field">
-    </form>
-    
-    <form action='/add' method="POST">
-    <button class="add-to-list">
-      Add to medication list
-    </button>
+      <input type="text" name="days_supply" id="days_supply">
+
+    <input id='calculate-button' type="submit" value="Calculate MME" form="drug-form">
+  
+    <input id='add-med-button' type="button" value="Add med to list">
+
 
     <section id="your-medList">
       <h1>Medication list</h1>
@@ -47,19 +46,23 @@
         <thead>
           <tr>
             <th>Medications</th>
-            {% for drug in get_meds() %}
-            <td> {{drug}} {{drug_dose}} {{quantity}} {{days_supply}} {{MME}}</td>
+            {% if user %}
+              {% if user.med_list %}
+                {% for drug in user.med_list %}
+              <td> {{drug.opioid}} {{drug.drug_dose}} {{drug.quantity}} {{drug.days_supply}} {{drug.daily_MME}}</td>
             {% endfor %}
+            <td> </td>
+          {% endif %}
+          {% endif %}
           </tr>
         </thead>
 
         <tbody id="med-list"></tbody>
       </table>
 
-
       <h2>
         <div>
-          Total MME: <span id="mme-total">0.00</span>
+          Total MME: <span id="mme-total"></span>
         </div>     
       </main>
 
@@ -70,11 +73,9 @@
       <p>
         Email <input type="text" name="email">
       </p>
-  
       <p>
         Password <input type="password" name="password">
       </p>
-  
       <p>
         <input type="submit">
       </p>
@@ -85,15 +86,18 @@
       <p>
         Email <input type="text" name="email">
       </p>
-  
       <p>
         Password <input type="password" name="password">
       </p>
-  
       <p>
         <input type="submit">
       </p>
     </form>
 
-  </body>
+<script src="/static/js/drug-calc.js"></script> 
+
+</body>
+
+
+
   {% endblock %}

@@ -47,10 +47,20 @@ def get_opioid_by_name(opioid_name):
     
     return Opioid.query.filter_by(opioid_name=opioid_name).first()
 
-def add_med_to_med_list(drug_dose, quantity, days_supply, daily_MME):
-    """add `Med` to user's med_list."""
+# def get_opioid_id_by_name(opioid):
+
+#     return Opioid.query.filter_by(opioid_name=opioid).first()
+
+def add_med(opioid, drug_dose, quantity, days_supply, daily_MME):
+    """add `Med`."""
+
+    opio = Opioid.query.filter_by(opioid_name=opioid).first()
+    print(opio)
+    print("~"*20)
+    print(opioid)
 
     med = Med(
+        opioid_id=opio.opioid_id,
         drug_dose=drug_dose, 
         quantity=quantity, 
         days_supply=days_supply, 

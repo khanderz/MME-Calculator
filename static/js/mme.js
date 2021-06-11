@@ -62,3 +62,5 @@ $.get('/results', (res) => {
   //   } else {
   //     loginBtn.innerHTML = 'Log In';
   //   }
+
+// $('#calculate-mme-button').on('submit', (e) => { e.preventDefault })
