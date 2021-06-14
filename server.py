@@ -112,17 +112,8 @@ def addMed():
 
     MME = float(crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)) 
 
-    print(MME, "*"*20)
+    print(MME, '********** MME *************')
 
-    # if session:
-    #     session["user_drug"] = user.drug
-    #     session["user_dose"] = user.dose
-    #     session["user_quantity"] = user.quantity
-    #     session["user_days_supply"] = user.days_supply
-    #     session["user_MME"] = user.MME
-    #     print("~"*20)
-    #     print(session)
-    
 
     return jsonify({'MME': MME})
     # return render_template('homepage.html', MME=MME) 
@@ -135,16 +126,14 @@ def add():
     if "user_id" in session:
     # Query for logged in `User` obj from db
         user = User.query.get(session['user_id'])
-        print(user)
-        print("~"*20)
+        print(user, '********** USER ************')
 
     # Query for `Opioid` from db, by drug name (from request.form)
         drug = request.form.get('drug')
         opioid = crud.get_opioid_by_name(opioid_name=drug)
     
-        print(drug)
-        print("*"*20)
-        print(opioid)
+        print(drug, '&&&&&&&& drug &&&&&&&&&&')
+        print(opioid, '^^^^^^^^^^ OPIOID  ^^^^^^^^^^^^^^^')
 
     # Create `Med` object, `Med` attributes:
     # drug_dose = db.Column(db.Integer)
@@ -164,7 +153,7 @@ def add():
             days_supply=days_supply,
         )
 
-        print(MME)
+        print(MME, '######### MME #############')
 
         new_med = crud.add_med(
             drug,
@@ -177,8 +166,7 @@ def add():
         # user.med_list.append(new_med)
         user.med_list.append(new_med)
 
-        print(user.med_list)
-        print("~"*20)
+        print(user.med_list, '*********** user.med_list *********')
 
         # db.session.add(user)
         # db.session.commit()
