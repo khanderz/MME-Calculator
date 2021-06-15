@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <body>
+
+<body>
   <h1>Morphine Milligram Equivalent (MME) Calculator</h1>
 
   <main>
-  <div class="input-title">Drug</div>
+    <div class="input-title">Drug</div>
     <form name="drug-form" id="drug-form">
       <select name="drug" id="drug">
         <option value="Codeine">Codeine</option>
@@ -25,76 +26,80 @@
         <option value="Tapentadol">Tapentadol</option>
       </select>
 
-    <div class="input-title">Total Daily Dose</div>
+      <div class="input-title">Total Daily Dose</div>
       <input type="text" name="dose" id="dose">
 
-    <div class="input-title">Quantity</div>
+      <div class="input-title">Quantity</div>
       <input type="text" name="quantity" id="quantity">
 
-    <div class="input-title">Days Supply</div>
+      <div class="input-title">Days Supply</div>
       <input type="text" name="days_supply" id="days_supply">
 
-    <input id='calculate-button' type="submit" value="Add med to list and calculate MME" form="drug-form">
-  
-    <input id='add-med-button' type="button" value="Save med to your database">
+      <input id='calculate-button' type="submit" value="Add med to list and calculate MME" form="drug-form">
 
-    <input id='clear-med-list' type="button" value="Clear med list">
+      <input id='add-med-button' type="button" value="Save med to your database">
+
+      <input id='clear-med-list' type="button" value="Clear med list">
 
 
 
-    <section id="your-medList">
-      <h1>Medication list</h1>
+      <section id="your-medList">
+        <h1>Medication list</h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Medications</th>
-          </tr>
-        </thead>
+        <table>
+          <thead>
+            <tr>
+              <th>Drug Name</th>
+              <th>Dose</th>
+              <th>Quantity</th>
+              <th>Days Supply</th>
+              <th>Calculated MME</th>
+            </tr>
+          </thead>
 
-        <tbody id="med-list"></tbody>
-      </table>
+          <tbody id="med-list"></tbody>
+        </table>
 
-      <h2>
-        <div>
-          Total MME: <span id="mme-total"></span>
-        </div>     
-      </main>
+        <h2>
+          <div>
+            Total MME: <span id="mme-total"></span>
+          </div>
+  </main>
 
-    </form>
+  </form>
 
-    <h2>Create an Account</h2>
-    <form action="/user_reg" method="POST">
-      <p>
-        Email <input type="text" name="email">
-      </p>
-      <p>
-        Password <input type="password" name="password">
-      </p>
-      <p>
-        <input type="submit">
-      </p>
-    </form>
+  <h2>Create an Account</h2>
+  <form action="/user_reg" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+    <p>
+      Password <input type="password" name="password">
+    </p>
+    <p>
+      <input type="submit">
+    </p>
+  </form>
 
-    <h2>User login</h2>
-    <form action="/user_login" method="POST">
-      <p>
-        Email <input type="text" name="email">
-      </p>
-      <p>
-        Password <input type="password" name="password">
-      </p>
-      <p>
-        <input type="submit">
-      </p>
-    </form>
+  <h2>User login</h2>
+  <form action="/user_login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+    <p>
+      Password <input type="password" name="password">
+    </p>
+    <p>
+      <input type="submit">
+    </p>
+  </form>
 
-    User details page
+  User details page
 
-<script src="/static/js/drug-calc.js"></script> 
+  <script src="/static/js/drug-calc.js"></script>
 
 </body>
 
 
 
-  {% endblock %}
+{% endblock %}
