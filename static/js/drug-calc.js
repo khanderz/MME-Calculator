@@ -31,8 +31,9 @@ const handleCalculate = (event) => {
     $.get('/results', params, (data) => {
         console.log(data, '*********DATA*******');
         $('#mme-total').html(data.MME);
-        MME = data.MME
+        MME = data.MME;
         incrementMME(MME);
+        $('#med-list').append(`<tr> <td> ${data.MME} </td> </tr>`);
     })
 
     // appends med list
@@ -44,15 +45,19 @@ const handleCalculate = (event) => {
       ${document.querySelector('#quantity').value} 
       ${document.querySelector('#days_supply').value}
       </td>
-      <td>   ${button} </td>
     </tr>`);
 
     // create delete button
-    const button = document.createElement("button");
-        button.innerHTML = "Delete drug";
-        li.appendChild(button);
-        li.setAttribute("id","delete-drug");
-}
+    const button = document.createElement("BUTTON");
+        button.innerText = 'Delete drug';
+    
+    $('#med-list').append(`
+    <tr>
+      <td> 
+      ${button}
+      </td>
+    </tr>`);
+};
 
 // takes in user inputs and assigns it "formData"
 const handleAddMed = (event) => {
