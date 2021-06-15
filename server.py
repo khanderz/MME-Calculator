@@ -2,7 +2,7 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-from model import connect_to_db, User
+from model import connect_to_db, User, Med, Opioid
 import crud
 import decimal
 from jinja2 import StrictUndefined

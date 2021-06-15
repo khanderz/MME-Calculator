@@ -44,7 +44,14 @@ const handleCalculate = (event) => {
       ${document.querySelector('#quantity').value} 
       ${document.querySelector('#days_supply').value}
       </td>
+      <td>   ${button} </td>
     </tr>`);
+
+    // create delete button
+    const button = document.createElement("button");
+        button.innerHTML = "Delete drug";
+        li.appendChild(button);
+        li.setAttribute("id","delete-drug");
 }
 
 // takes in user inputs and assigns it "formData"
@@ -64,6 +71,22 @@ const handleAddMed = (event) => {
     })
 }
 
+// Reset med list button
+const clearMedList = () => {
+    $('#mme-total').html('0');
+    $('#med-list').empty();
+    MMECalcTotal = 0;
+    console.log(MMECalcTotal, '******* MME total reset *******');
+};
+
+// Delete a drug from the med list
+const deleteDrug =
+
 // event listeners
 document.getElementById('drug-form').addEventListener('submit', handleCalculate)
 document.getElementById('add-med-button').addEventListener('click', handleAddMed)
+document.getElementById('clear-med-list').addEventListener('click', clearMedList)
+
+
+// REACT
+// ReactDOM.render();
