@@ -1,12 +1,9 @@
 console.log('js is working')
 
-
-
-// takes user inputs and assigns them to "params"
-
 // create a reset button that will reset MMECalcTotal back to 0
 let MMECalcTotal = 0
 
+// takes user inputs and assigns them to "params"
 const handleCalculate = (event) => {
     event.preventDefault()
     const params = {

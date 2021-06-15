@@ -46,14 +46,6 @@
         <thead>
           <tr>
             <th>Medications</th>
-            {% if user %}
-              {% if user.med_list %}
-                {% for drug in user.med_list %}
-              <td> {{drug.opioid}} {{drug.drug_dose}} {{drug.quantity}} {{drug.days_supply}} {{drug.daily_MME}}</td>
-            {% endfor %}
-            <td> </td>
-          {% endif %}
-          {% endif %}
           </tr>
         </thead>
 
@@ -93,6 +85,8 @@
         <input type="submit">
       </p>
     </form>
+
+    User details page
 
 <script src="/static/js/drug-calc.js"></script> 
 

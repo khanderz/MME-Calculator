@@ -3,8 +3,8 @@
 {% block title %}{{ user.email }} - Details{% endblock %}
 
 {% block body %}
-
-<h1>{{ user.email }}</h1>
+{% if user %}
+<h1>Hello, {{ user.email }}</h1>
 <p>
     <h4>User ID: {{ user.user_id }}</h4>
 </p>
@@ -18,6 +18,9 @@
     {% else %}
         <li>No medication lists by this user </li>
     {% endif %}
+{% else %}
+    <p>Please return to homepage and log in</p>
+{% endif %}    
 <br>
 </p>
 
