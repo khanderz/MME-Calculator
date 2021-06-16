@@ -20,7 +20,7 @@ class User(db.Model):
     med_list = db.relationship("Med", backref="user")  
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email}>'
+        return f'<User user_id={self.user_id} email={self.email} med_lists={self.med_list}>'
 
 #med class
 class Med(db.Model):
@@ -39,10 +39,10 @@ class Med(db.Model):
     daily_MME = db.Column(db.Numeric)
     date_filled = db.Column(db.DateTime)   
 
-    opioid = db.relationship("Opioid", backref="med")                 
+    opioid = db.relationship("Opioid", backref="med")
 
     def __repr__(self):
-        return f'<med_id={self.med_id} drug dose={self.drug_dose} quantity={self.quantity} days supply={self.days_supply} daily MME={self.daily_MME} date filled={self.date_filled}>'
+        return f'<med_id={self.med_id} drug dose={self.drug_dose} quantity={self.quantity} days supply={self.days_supply} daily MME={self.daily_MME} date filled={self.date_filled} User={self.user_id}>'
 
 #opioids class
 class Opioid(db.Model):

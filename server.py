@@ -95,6 +95,9 @@ def show_user(user_id):
     """Show details of a particular user"""
 
     user = crud.get_user_by_id(user_id)
+    
+    print(user, '****** USER ******')
+    print(user.med_list, '***** USER.MEDLIST **********')
 
     return render_template('user_details.html', user=user)  
 
@@ -155,24 +158,22 @@ def add():
 
         print(MME, '######### MME #############')
 
-        new_med = crud.add_med(
-            drug,
-            drug_dose, 
-            quantity, 
-            days_supply, 
+        crud.add_opioid_to_user_medlist(
+            user,
+            opioid,
+            drug_dose,
+            quantity,
+            days_supply,
             MME
         )
-        
-        # user.med_list.append(new_med)
-        user.med_list.append(new_med)
 
-        print(user.med_list, '*********** user.med_list *********')
+        print(user.med_list, user, '*********** user.med_list *********')
 
         # db.session.add(user)
         # db.session.commit()
 
         # return redirect to homepage
-        return jsonify({'msg': 'medication added'}), 200
+        return jsonify({'msg': 'medication added',}), 200
         # ('homepage.html', user=user, drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
     else:
         return jsonify("unauthorized")

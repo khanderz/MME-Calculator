@@ -2,9 +2,6 @@
 
 console.log('js is working');
 
-// create a reset button that will reset MMECalcTotal back to 0
-let MMECalcTotal = 0;
-
 // Recalculate/update total MME based on meds in #med-list
 const updateTotalMME = () => {
     let MMETotal = 0;
@@ -84,7 +81,7 @@ const handleCalculate = (event) => {
 };
 
 // takes in user inputs and assigns it "formData"
-const handleAddMed = (event) => {
+const handleSaveList = (event) => {
     event.preventDefault();
 
     const formData = {
@@ -111,10 +108,7 @@ const clearMedList = () => {
     updateTotalMME();
 };
 
-// Delete a drug from the med list
-// const deleteDrug =
-
 // event listeners
 document.getElementById('drug-form').addEventListener('submit', handleCalculate);
-document.getElementById('add-med-button').addEventListener('click', handleAddMed);
+document.getElementById('save-list-button').addEventListener('click', handleSaveList);
 document.getElementById('clear-med-list').addEventListener('click', clearMedList);

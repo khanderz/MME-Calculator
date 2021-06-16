@@ -51,6 +51,29 @@ def get_opioid_by_name(opioid_name):
 
 #     return Opioid.query.filter_by(opioid_name=opioid).first()
 
+
+def add_opioid_to_user_medlist(
+    user,
+    opioid,
+    drug_dose,
+    quantity,
+    days_supply,
+    daily_MME
+):
+    med = Med(
+        drug_dose=drug_dose, 
+        quantity=quantity, 
+        days_supply=days_supply, 
+        daily_MME=daily_MME
+    )
+    med.opioid = opioid
+    
+    user.med_list.append(med)
+    
+    db.session.add(user)
+    db.session.commit()
+
+
 def add_med(opioid, drug_dose, quantity, days_supply, daily_MME):
     """add `Med`."""
 
