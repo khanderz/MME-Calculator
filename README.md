@@ -18,6 +18,7 @@ There is no completely safe opioid dose, and this calculator does not substitute
 
 
 ## Links:
-[Link] (https://www.cdc.gov/drugoverdose/index.html)
+[Link][1]
+[1]: https://www.cdc.gov/drugoverdose/index.html
 [Link] (https://www.linkedin.com/in/khanh-mai-33190/)
 
