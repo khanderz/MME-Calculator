@@ -8,6 +8,11 @@ There is no completely safe opioid dose, and this calculator does not substitute
 Features:
 
 Install:
+git clone https://github.com/khanderz/MME-Calculator.git
+cd MME-calculator
+pip3 install requirements.txt
+python3 seed_db.py
 
-Docs:
+Run program:
+python3 server.py
 
