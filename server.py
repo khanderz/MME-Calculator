@@ -18,16 +18,8 @@ def homepage():
     """View homepage."""
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    # drug = ""
-
-    # drug_dose = ""
-    # quantity = ""
-    # days_supply = ""
-
-    # MME = ""
-
-    # return render_template('homepage.html', user=user, drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
-    return render_template('homepage.html', user=user)
+ 
+    return render_template('homepage.html', user=user, user_id=user_id)
 
 # User routes
 @app.route('/user_reg', methods=['POST'])
@@ -93,13 +85,17 @@ def logout():
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user"""
+    if "user_id" in session:
+        user = crud.get_user_by_id(user_id)
+        
+        print(user, '****** USER ******')
+        print(user.med_list, '***** USER.MEDLIST **********')
 
-    user = crud.get_user_by_id(user_id)
+        return render_template('user_details.html', user=user)  
+    else:
+        flash("You are not currently logged in.")
     
-    print(user, '****** USER ******')
-    print(user.med_list, '***** USER.MEDLIST **********')
-
-    return render_template('user_details.html', user=user)  
+    return redirect('/')       
 
 # MME and drug routes
 @app.route('/results')
