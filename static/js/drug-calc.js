@@ -16,6 +16,11 @@ const updateTotalMME = () => {
     });
 
     $('#mme-total').html(MMETotal);
+
+    clinicalAssessment(MMETotal);
+
+// REACT hook to update clinical assessment
+    // assessment(MMETotal);
 };
 
 // Add medication to medlist table
@@ -61,6 +66,7 @@ const addMedToMedlist = (medData) => {
         // Append tr to #med-list
         $('#med-list').append(tr);
         updateTotalMME();
+
     });
 };
 
@@ -78,6 +84,7 @@ const handleCalculate = (event) => {
     console.log(params);
     
     addMedToMedlist(params);
+    
 };
 
 // takes in user inputs and assigns it "formData"
@@ -108,7 +115,42 @@ const clearMedList = () => {
     updateTotalMME();
 };
 
+
+// Clinical assessment pop-up
+const clinicalAssessment = (MMETotal) => {
+    console.log(MMETotal, '&&&&&&CLINICAL ASSESSMENT&&&&&')
+    if (MMETotal <= 20) {
+        alert('Acceptable therapeutic range');
+    } if (MMETotal >= 50) {
+        alert('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone')     
+    } if (MMETotal >= 90) {
+        alert('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
+}};
+
 // event listeners
 document.getElementById('drug-form').addEventListener('submit', handleCalculate);
 document.getElementById('save-list-button').addEventListener('click', handleSaveList);
 document.getElementById('clear-med-list').addEventListener('click', clearMedList);
+
+
+// REACT
+// function results() {
+
+//     const [assessValue, setAssessValue] = React.useState('There is no completely safe opioid dose; use caution when prescribing opioids at any dose and always prescribe the lowest effective dose.');
+
+//     function assessment(MMETotal) {
+//         if (MMETotal <= 20) {
+//             setAssessValue('Acceptable therapeutic range');
+//         } if (MMETotal >= 50) {
+//             setAssessValue('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone')     
+//         } if (MMETotal >= 90) {
+//             setAssessValue('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
+//     }};
+
+//     return ({assessValue})
+// }    
+
+// REACT state change to render clinical assessment per Total MME 
+// ReactDOM.render(
+//     assessment(), document.getElementById('assessment')
+// );
