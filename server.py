@@ -6,7 +6,7 @@ from model import connect_to_db, User, Med, Opioid
 import crud
 import decimal
 from jinja2 import StrictUndefined
-from datetime import date
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -145,7 +145,10 @@ def add():
         drug_dose = decimal.Decimal(request.form.get('dose', 0))
         quantity = decimal.Decimal(request.form.get('quantity', 0))
         days_supply = decimal.Decimal(request.form.get('days_supply', 0))
-        date_filled = request.form.get('date_filled', 0)
+
+        date_filled = None
+        if request.form.get('date_filled', None) != "": 
+            date_filled = request.form.get('date_filled', None)
         # str(date_filled)
         # date.isoformat(date_filled)
 
