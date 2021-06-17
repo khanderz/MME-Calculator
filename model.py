@@ -14,8 +14,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer,
                         autoincrement = True,
                         primary_key = True)
-    email = db.Column(db.String, unique=True) 
-    password = db.Column(db.String) 
+    email = db.Column(db.String, unique=True, nullable=False) 
+    password = db.Column(db.String, nullable=False) 
 
     med_list = db.relationship("Med", backref="user")  
 
@@ -33,11 +33,11 @@ class Med(db.Model):
                         primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))                    
     opioid_id = db.Column(db.Integer, db.ForeignKey('opioids.opioid_id'))
-    drug_dose = db.Column(db.Integer)
-    quantity = db.Column(db.Integer)
-    days_supply = db.Column(db.Integer)
+    drug_dose = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    days_supply = db.Column(db.Integer, nullable=False)
     daily_MME = db.Column(db.Numeric)
-    date_filled = db.Column(db.DateTime)   
+    date_filled = db.Column(db.Date, nullable=True)   
 
     opioid = db.relationship("Opioid", backref="med")
 
@@ -53,8 +53,8 @@ class Opioid(db.Model):
     opioid_id = db.Column(db.Integer, 
                         autoincrement = True,
                         primary_key = True)
-    opioid_name = db.Column(db.String)
-    conversion_factor = db.Column(db.Numeric)         
+    opioid_name = db.Column(db.String, nullable=False)
+    conversion_factor = db.Column(db.Numeric, nullable=False)         
 
     def __repr__(self):
         return f'<Opioid opioid_id={self.opioid_id} opioid name={self.opioid_name} MME conversion factor={self.conversion_factor}>'

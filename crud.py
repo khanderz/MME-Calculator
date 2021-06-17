@@ -58,13 +58,15 @@ def add_opioid_to_user_medlist(
     drug_dose,
     quantity,
     days_supply,
-    daily_MME
+    daily_MME,
+    date_filled
 ):
     med = Med(
         drug_dose=drug_dose, 
         quantity=quantity, 
         days_supply=days_supply, 
-        daily_MME=daily_MME
+        daily_MME=daily_MME,
+        date_filled=date_filled
     )
     med.opioid = opioid
     

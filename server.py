@@ -6,6 +6,7 @@ from model import connect_to_db, User, Med, Opioid
 import crud
 import decimal
 from jinja2 import StrictUndefined
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -106,6 +107,7 @@ def addMed():
     dose = decimal.Decimal(request.args.get('dose'))
     quantity = decimal.Decimal(request.args.get('quantity'))
     days_supply = decimal.Decimal(request.args.get('days_supply'))
+    date_filled = request.args.get('date_filled', 0)
 
     print('^^^^^^^^^^', drug, dose, quantity, days_supply, '^^^^^^^^^^')
 
@@ -143,6 +145,11 @@ def add():
         drug_dose = decimal.Decimal(request.form.get('dose', 0))
         quantity = decimal.Decimal(request.form.get('quantity', 0))
         days_supply = decimal.Decimal(request.form.get('days_supply', 0))
+        date_filled = request.form.get('date_filled', 0)
+        # str(date_filled)
+        # date.isoformat(date_filled)
+
+        print(date_filled, '####### DATE FILLED #######')
         print(drug_dose, quantity, days_supply, '#######FORM INPUT#######')
 
         MME = crud.calculate_MME(
@@ -160,7 +167,8 @@ def add():
             drug_dose,
             quantity,
             days_supply,
-            MME
+            MME,
+            date_filled,
         )
 
         print(user.med_list, user, '*********** user.med_list *********')

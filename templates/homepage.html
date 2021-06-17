@@ -36,9 +36,9 @@
       <input type="text" name="days_supply" id="days_supply">
 
       <div class="input-title">Date Filled</div>
-      <input type="text" name="date_filled" id="date_filled"> (format YYYY-MM-DD)
+      <input type="datetime" name="date_filled" id="date_filled"> (format YYYY-MM-DD)
 
-      
+
       <input id='calculate-button' type="submit" value="Add med to list and calculate MME" form="drug-form">
 
       <input id='save-list-button' type="button" value="Save med list to your database">
@@ -57,6 +57,7 @@
               <th>Dose</th>
               <th>Quantity</th>
               <th>Days Supply</th>
+              <th>Date Filled</th>
               <th>Calculated MME</th>
             </tr>
           </thead>
@@ -67,6 +68,14 @@
         <h2>
           <div>
             Total MME: <span id="mme-total"></span>
+          </div>
+
+          <div>
+            Average MME per day in last 7 days: <span id="7day-mme-total"></span>
+          </div>
+
+          <div>
+            Average MME per day in last 30 days: <span id="30day-mme-total"></span>
           </div>
   </main>
   </form>

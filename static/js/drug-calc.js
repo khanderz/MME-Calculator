@@ -30,7 +30,8 @@ const updateTotalMME = () => {
 //     drug: drug name,
 //     dose: drug dose,
 //     quantity: quantity of drug,
-//     days_supply: days supply
+//     days_supply: days supply 
+//     date_filled: date filled
 //  }
 const addMedToMedlist = (medData) => {
     // Create delete button
@@ -56,6 +57,7 @@ const addMedToMedlist = (medData) => {
         <td>${medData.dose}</td>
         <td>${medData.quantity}</td>
         <td>${medData.days_supply}</td>
+        <td>${medData.date_filled}</td>
     `);
     
     // Calculate MME for medData and add to #med-list table
@@ -78,7 +80,8 @@ const handleCalculate = (event) => {
         'drug': $('#drug').val(),
         'dose': document.querySelector('#dose').value,
         'quantity': document.querySelector('#quantity').value, 
-        'days_supply': document.querySelector('#days_supply').value
+        'days_supply': document.querySelector('#days_supply').value,
+        'date_filled': document.querySelector('#date_filled').value
     };
 
     console.log(params);
@@ -95,7 +98,8 @@ const handleSaveList = (event) => {
         'drug': document.querySelector('#drug').value,
         'dose': document.querySelector('#dose').value,
         'quantity': document.querySelector('#quantity').value, 
-        'days_supply': document.querySelector('#days_supply').value    
+        'days_supply': document.querySelector('#days_supply').value, 
+        'date_filled': document.querySelector('#date_filled').value   
     };
 
     console.log(formData);
@@ -127,10 +131,22 @@ const clinicalAssessment = (MMETotal) => {
         alert('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
 }};
 
-// event listeners
+// EVENT LISTENERS
 document.getElementById('drug-form').addEventListener('submit', handleCalculate);
 document.getElementById('save-list-button').addEventListener('click', handleSaveList);
 document.getElementById('clear-med-list').addEventListener('click', clearMedList);
+
+
+// FEATURES
+// 7 day daily average feature
+// MME sum [(today + 7 days from med.date_filled) divided by 7]
+const sevenDay = () => {
+    today = Date();
+    const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+    
+}
+
+
 
 
 // REACT

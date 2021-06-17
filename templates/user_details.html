@@ -18,7 +18,9 @@
                 Dose: {{ drug.drug_dose }}
                 Quantity: {{ drug.quantity }}
                 Days Supply: {{ drug.days_supply }}
-                Total Daily MME: {{ drug.daily_MME }}    </li>
+                Date Filled: {{ drug.date_filled }} 
+                Total Daily MME: {{ drug.daily_MME }} 
+               </li>
             <br>
         {% endfor %}
     {% else %}
