@@ -131,7 +131,7 @@ const clinicalAssessment = (MMETotal) => {
         $('#assessment').html('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone');
     } if (MMETotal >= 90) {
         // alert('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
-        $('#assessment').html('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
+        $('#assessment').html('Avoid, carefully justify dose, increase monitoring, and/or consider prescribing naloxone')
 }};
 
 // EVENT LISTENERS
