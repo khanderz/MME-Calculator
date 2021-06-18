@@ -2,11 +2,11 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-from model import connect_to_db, User, Med, Opioid
+from model import connect_to_db, db, User, Med, Opioid
 import crud
 import decimal
 from jinja2 import StrictUndefined
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -201,6 +201,42 @@ def calculate_mme():
     )
 
     return jsonify({'value': float(MME)})
+
+
+@app.route('/get-seven-day-avg') 
+def seven_day():
+    date = request.args.get('date')
+    drug = request.args.get('drug')
+    print(date, drug, '@@@@@DATE & DRUG@@@@@')
+
+    total = 0
+    day_count = 0
+
+    for i in range(7):
+        day = datetime.strptime(date, "%Y-%m-%d").date() - timedelta(days=i)
+        iso = datetime.strptime(day.isoformat(), "%Y-%m-%d").date()
+        print(f"{i} days ago: {iso}")
+        # opioid = Opioid.query.filter_by(opioid_name=drug).first()
+        # meds = Med.query.filter_by(date_filled=iso_date, opioid_id=opioid.opioid_id).all()
+        meds = Med.query.join(Opioid).filter(Med.date_filled==iso, Opioid.opioid_name==drug).all()
+        # ^^ faster query using join method instead (: -thu
+        if meds:
+            print(meds)
+            day_count += 1
+            mmes = [med.daily_MME for med in meds]
+            total += sum(mmes)
+    
+    print(total)
+    print(day_count)
+        
+    # calculate the last 7 days
+    # turn last 7 days into datettime objects
+    # query db for those days
+    # if exists, add MME to total and +1 to day_count
+    # divide and return jsonify('seven-day-avg': total/day_count)
+
+    return jsonify({'seven_avg': str(total/day_count)})
+
 
 if __name__ == '__main__':
     connect_to_db(app)

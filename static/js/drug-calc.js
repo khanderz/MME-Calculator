@@ -84,9 +84,12 @@ const handleCalculate = (event) => {
         'date_filled': $('#date_filled').val()
     };
 
+    sevenDay();
+
     console.log(params);
     
     addMedToMedlist(params);
+
     
 };
 
@@ -104,11 +107,16 @@ const handleSaveList = (event) => {
 
     console.log(formData);
 
+    sevenDay();
+
     // adds to user.med_list in db
     $.post('/add', formData, (response) => {
         console.log(response);
         if (response.msg === 'medication added') {
             addMedToMedlist(formData);
+            alert('Medication added to your database. You can now view the medication in your user details page.');
+        } else {
+            alert('Please login');
         }
     });
 };
@@ -143,10 +151,22 @@ document.getElementById('clear-med-list').addEventListener('click', clearMedList
 // FEATURES
 // 7 day daily average feature
 // MME sum [(today + 7 days from med.date_filled) divided by 7]
-const sevenDay = () => {
-    today = Date();
-    const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-    
+function sevenDay() {
+    let dateFilled = document.getElementById("date_filled").value
+    let drugName = document.getElementById("drug").value
+    console.log(dateFilled);
+
+    let args = {
+        'date': dateFilled,
+        'drug': drugName
+    }
+
+    $.get('/get-seven-day-avg', args, (res) => {
+        console.log(res)
+
+        $('#7day-mme-total').html(Number(res.seven_avg))
+        
+    })
 }
 
 
