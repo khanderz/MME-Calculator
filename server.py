@@ -204,30 +204,87 @@ def calculate_mme():
 
 
 @app.route('/get-seven-day-avg') 
-def seven_day():
+def save_seven_day():
     date = request.args.get('date')
     drug = request.args.get('drug')
+    dose = decimal.Decimal(request.args.get('dose'))
+    quantity = decimal.Decimal(request.args.get('quantity'))
+    days_supply = decimal.Decimal(request.args.get('days_supply'))
+
     print(date, drug, '@@@@@DATE & DRUG@@@@@')
+    print(dose, quantity, days_supply, '@@@@@ dose, quantity, days supply@@@@@')
+
+    MME = crud.calculate_MME(
+        drug=drug,
+        dose=dose,
+        quantity=quantity,
+        days_supply=days_supply,
+    )
+
+    print(MME, '@@@@@ MME!!!!!!!! @@@@@')
 
     total = 0
     day_count = 0
 
+    # for i in range(7):
+    #     start_date = datetime.strptime(date, "%Y-%m-%d")
+    #     end_date = datetime.today() - timedelta(days=i)
+    #     day = datetime.strptime(date, "%Y-%m-%d").date() - timedelta(days=i)
+    #     iso = datetime.strptime(day.isoformat(), "%Y-%m-%d").date()
+    #     print(f"{i} days ago: {iso}")
+        # print(start_date, "***********Start************")
+        # print(end_date, "***********End************")
+
+    start_date = datetime.strptime(date, "%Y-%m-%d")
+    end_date = datetime.today()    
+    # delta = timedelta(days=7)
+
+    # print(start_date, "***********Start************")
+    # print(end_date, "***********End************")  
+
     for i in range(7):
-        day = datetime.strptime(date, "%Y-%m-%d").date() - timedelta(days=i)
-        iso = datetime.strptime(day.isoformat(), "%Y-%m-%d").date()
-        print(f"{i} days ago: {iso}")
+        delta = timedelta(days=i)
+        end_date -= delta
+        print(end_date, "***********End************") 
+        count = (end_date - start_date)
+        print(count.days, "########### count days ###############") # should print 5 days (6/21-6/17), but is printing 3 days for 6/24-6/21
+        day_count = abs(count.days) 
+
+    # while start_date < end_date:
+    #     print(start_date) # test date: 2021-6-17
+    #     end_date -= delta #should stop at end date (today or 6/21), but stops at 2021-6-24
+    #     count = (end_date - start_date)
+    #     print(count.days, "########### count days ###############") # should print 5 days (6/21-6/17), but is printing 3 days for 6/24-6/21
+    #     day_count = abs(count.days) 
+
+    print(start_date, "***********Start************")
+    # print(end_date, "***********End************")  
+    print(total, "^^^^^^^^^^^^^^^ total ^^^^^^^^^^^^^^")
+    print(day_count, "^^^^^^^^^^^^^^^ day_count ^^^^^^^^^^^^^^^")    
+
         # opioid = Opioid.query.filter_by(opioid_name=drug).first()
         # meds = Med.query.filter_by(date_filled=iso_date, opioid_id=opioid.opioid_id).all()
-        meds = Med.query.join(Opioid).filter(Med.date_filled==iso, Opioid.opioid_name==drug).all()
+        # meds = Med.query.join(Opioid).filter(Med.date_filled==iso, Opioid.opioid_name==drug).all()
         # ^^ faster query using join method instead (: -thu
-        if meds:
-            print(meds)
-            day_count += 1
-            mmes = [med.daily_MME for med in meds]
-            total += sum(mmes)
-    
-    print(total)
-    print(day_count)
+
+        # print(day, iso, "$$$$$$$$$$$$$$ DAY AND ISO $$$$$$$$$$$$")
+
+            # if meds:
+            #     print(meds)
+        # day_count += 1
+            # mmes = [med.daily_MME for med in meds]
+        # total += sum(mmes)
+
+
+    sevenday = 0
+
+    if day_count == 0:   
+        sevenday == 0
+    else:
+        total = MME * day_count
+        sevenday = str(total/day_count)   
+
+    print(sevenday, "&&&&&&&&&&& seven day &&&&&&&&&&")    
         
     # calculate the last 7 days
     # turn last 7 days into datettime objects
@@ -235,7 +292,7 @@ def seven_day():
     # if exists, add MME to total and +1 to day_count
     # divide and return jsonify('seven-day-avg': total/day_count)
 
-    return jsonify({'seven_avg': str(total/day_count)})
+    return jsonify({'seven_avg': sevenday})
 
 
 if __name__ == '__main__':

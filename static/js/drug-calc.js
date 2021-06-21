@@ -2,6 +2,8 @@
 
 console.log('js is working');
 
+const tr = $(document.createElement('tr'));
+
 // Recalculate/update total MME based on meds in #med-list
 const updateTotalMME = () => {
     let MMETotal = 0;
@@ -18,9 +20,6 @@ const updateTotalMME = () => {
     $('#mme-total').html(MMETotal);
 
     clinicalAssessment(MMETotal);
-
-// REACT hook to update clinical assessment
-    // assessment(MMETotal);
 };
 
 // Add medication to medlist table
@@ -33,6 +32,10 @@ const updateTotalMME = () => {
 //     days_supply: days supply 
 //     date_filled: date filled
 //  }
+
+// should implment sevenDayAvg like updateTotalMME (line 8)
+let sevenDayAvg = 0
+
 const addMedToMedlist = (medData) => {
     // Create delete button
     const button = $(document.createElement('button'));
@@ -45,6 +48,7 @@ const addMedToMedlist = (medData) => {
         rowToDelete.remove();
 
         updateTotalMME();
+        incrementSevenDay();
     });
     
     // Build tr element
@@ -67,8 +71,19 @@ const addMedToMedlist = (medData) => {
         
         // Append tr to #med-list
         $('#med-list').append(tr);
+        let now = moment().format('YYYY-MM-DD')
+        let sevenDaysAgo = new Date()
+        sevenDaysAgo = moment(sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)).format('YYYY-MM-DD')
+        let input = moment(medData.date_filled)
+        let dateWithinWeek = moment(medData.date_filled).isBetween(sevenDaysAgo, now);
+        
+        if (dateWithinWeek) {
+            sevenDayAvg += data.MME
+            console.log(sevenDayAvg, '7 DAY AVERAGE')
+        }
+        
         updateTotalMME();
-
+        incrementSevenDay();
     });
 };
 
@@ -84,13 +99,8 @@ const handleCalculate = (event) => {
         'date_filled': $('#date_filled').val()
     };
 
-    sevenDay();
-
     console.log(params);
-    
     addMedToMedlist(params);
-
-    
 };
 
 // takes in user inputs and assigns it "formData"
@@ -107,7 +117,7 @@ const handleSaveList = (event) => {
 
     console.log(formData);
 
-    sevenDay();
+    // sevenDay();
 
     // adds to user.med_list in db
     $.post('/add', formData, (response) => {
@@ -125,6 +135,7 @@ const handleSaveList = (event) => {
 const clearMedList = () => {
     $('#med-list').empty();
     updateTotalMME();
+    incrementSevenDay();
 };
 
 
@@ -151,45 +162,50 @@ document.getElementById('clear-med-list').addEventListener('click', clearMedList
 // FEATURES
 // 7 day daily average feature
 // MME sum [(today + 7 days from med.date_filled) divided by 7]
-function sevenDay() {
-    let dateFilled = document.getElementById("date_filled").value
-    let drugName = document.getElementById("drug").value
-    console.log(dateFilled);
 
-    let args = {
-        'date': dateFilled,
-        'drug': drugName
-    }
+// function sevenDay() {
+//     let dateFilled = $('#date_filled').val()
+//     let drugName = $('#drug').val()
+//     let dose = $('#dose').val()
+//     let quantity = $('#quantity').val()
+//     let days_supply = $('#days_supply').val()
 
-    $.get('/get-seven-day-avg', args, (res) => {
-        console.log(res)
+//     console.log(dateFilled)
 
-        $('#7day-mme-total').html(Number(res.seven_avg))
+//     let args = {
+//         'date': dateFilled,
+//         'drug': drugName,
+//         'dose': dose,
+//         'quantity': quantity,
+//         'days_supply': days_supply
+//     }
+
+//     $.get('/get-seven-day-avg', args, (res) => {
+//         // check if dateFilled < today and dateFilled > than 7 days ago then send request 
+//         tr.append(`<td class="med-list-sevenday">${res.seven_avg}</td>`);
+//         console.log(res);
+//         console.log(res.seven_avg);
         
-    })
-}
+//         // Append tr to #med-list
+//         $('#med-list').append(tr);
+
+//         // $('#7day-mme-total').html(Number(res.seven_avg))
+        
+//     })
+// };
+
+const incrementSevenDay = () => {
+    let sevenDay = 0;
 
 
+    // Get all .med-list-mme <td> elements
+    $('.med-list-sevenday').each((idx, el) => {
+        console.log(el);
 
+        sevenDay += Number($(el).html());
+        
+        console.log(`Total after 7-day loop # ${idx}: ${sevenDay}`);
+    });
 
-// REACT
-// function results() {
-
-//     const [assessValue, setAssessValue] = React.useState('There is no completely safe opioid dose; use caution when prescribing opioids at any dose and always prescribe the lowest effective dose.');
-
-//     function assessment(MMETotal) {
-//         if (MMETotal <= 20) {
-//             setAssessValue('Acceptable therapeutic range');
-//         } if (MMETotal >= 50) {
-//             setAssessValue('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone')     
-//         } if (MMETotal >= 90) {
-//             setAssessValue('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
-//     }};
-
-//     return ({assessValue})
-// }    
-
-// REACT state change to render clinical assessment per Total MME 
-// ReactDOM.render(
-//     assessment(), document.getElementById('assessment')
-// );
+    $('#7day-mme-total').html(sevenDayAvg);
+};
