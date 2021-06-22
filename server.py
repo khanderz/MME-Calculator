@@ -149,8 +149,6 @@ def add():
         date_filled = None
         if request.form.get('date_filled', None) != "": 
             date_filled = request.form.get('date_filled', None)
-        # str(date_filled)
-        # date.isoformat(date_filled)
 
         print(date_filled, '####### DATE FILLED #######')
         print(drug_dose, quantity, days_supply, '#######FORM INPUT#######')
@@ -176,12 +174,7 @@ def add():
 
         print(user.med_list, user, '*********** user.med_list *********')
 
-        # db.session.add(user)
-        # db.session.commit()
-
-        # return redirect to homepage
         return jsonify({'msg': 'medication added',}), 200
-        # ('homepage.html', user=user, drug=drug, drug_dose=drug_dose, quantity=quantity, days_supply=days_supply, MME=MME)  
     else:
         return jsonify("unauthorized")
 

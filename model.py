@@ -64,7 +64,7 @@ class Med(db.Model):
         return new_med
 
     def __repr__(self):
-        return f'<med_id={self.med_id} drug dose={self.drug_dose} quantity={self.quantity} days supply={self.days_supply} daily MME={self.daily_MME} date filled={self.date_filled} User={self.user_id}>'
+        return f'<med_id={self.med_id} drug dose={self.drug_dose} quantity={self.quantity} days supply={self.days_supply} daily MME={self.daily_MME} date filled={self.date_filled} end date={self.end_date} User={self.user_id}>'
 
 
 #opioids class

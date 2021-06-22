@@ -2,6 +2,7 @@
 
 from model import db, User, Med, Opioid, connect_to_db
 import decimal
+from datetime import datetime
 
 # Create, Read, Update, Delete functions
 # User functions
@@ -46,10 +47,6 @@ def get_opioid_by_name(opioid_name):
     """Return `Opioid` with the given `opioid_name`."""
     
     return Opioid.query.filter_by(opioid_name=opioid_name).first()
-
-# def get_opioid_id_by_name(opioid):
-
-#     return Opioid.query.filter_by(opioid_name=opioid).first()
 
 
 def add_opioid_to_user_medlist(
@@ -102,6 +99,20 @@ def get_meds():
     """view all meds in med list"""
 
     return Med.query.all()    
+
+
+def get_meds_by_date_range(date_filled, end_date):    
+    """Takes in a date_filled and end_date and returns a list of med items that fit within the date range.
+    
+    Args:
+        date_filled = db.Column(db.Date, nullable=True)   
+        end_date = db.Column(db.Date, nullable=True)
+    """
+
+    med_list = Med.query.filter(Med.end_date <= end_date).\
+                filter(Med.date_filled >= date_filled).all()
+
+    return med_list
 
 
 if __name__ == '__main__':
