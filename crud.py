@@ -61,12 +61,14 @@ def add_opioid_to_user_medlist(
     daily_MME,
     date_filled
 ):
+    """Create `Med` object associated with `user`."""
+
     med = Med(
         drug_dose=drug_dose, 
         quantity=quantity, 
         days_supply=days_supply, 
         daily_MME=daily_MME,
-        date_filled=date_filled
+        date_filled=date_filled,
     )
     med.opioid = opioid
     
@@ -75,26 +77,6 @@ def add_opioid_to_user_medlist(
     db.session.add(user)
     db.session.commit()
 
-
-def add_med(opioid, drug_dose, quantity, days_supply, daily_MME):
-    """add `Med`."""
-
-    opio = Opioid.query.filter_by(opioid_name=opioid).first()
-    print(opio)
-    print("~"*20)
-    print(opioid)
-
-    med = Med(
-        opioid_id=opio.opioid_id,
-        drug_dose=drug_dose, 
-        quantity=quantity, 
-        days_supply=days_supply, 
-        daily_MME=daily_MME)
-
-    db.session.add(med)
-    db.session.commit()
-
-    return med
 
 def calculate_MME(drug, dose, quantity, days_supply): 
     """Calculate MME with unqiue conversion factor from db for specific drug.

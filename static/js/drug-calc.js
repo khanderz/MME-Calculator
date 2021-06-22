@@ -1,11 +1,28 @@
 "use strict";
 
-console.log('js is working');
+// Create button element, add click handler to remove associated medlist row
+// and recalculate + display MME total and clinical assessment.
+const buildMedlistRowDeleteButton = () => {
+    // Create delete button
+    const button = $(document.createElement('button'));
+    button.html('Delete drug');
 
-const tr = $(document.createElement('tr'));
+    // Add event handler to delete button that deletes the button's row
+    $(button).on('click', (evt) => {
+        // Get the button's row and delete it
+        const rowToDelete = $(button).parent();
+        rowToDelete.remove();
+
+        const MMETotal = calculateTotalMME();
+        displayMMETotal(MMETotal);
+        displayClinicalAssessment(MMETotal);
+    });
+    
+    return button;
+};
 
 // Recalculate/update total MME based on meds in #med-list
-const updateTotalMME = () => {
+const calculateTotalMME = () => {
     let MMETotal = 0;
 
     // Get all .med-list-mme <td> elements
@@ -17,9 +34,28 @@ const updateTotalMME = () => {
         console.log(`Total after loop # ${idx}: ${MMETotal}`);
     });
 
-    $('#mme-total').html(MMETotal);
+    return MMETotal;
+};
 
-    clinicalAssessment(MMETotal);
+// Display clinical assessment message based on total MME.
+const displayClinicalAssessment = (MMETotal) => {
+    console.log(MMETotal, '&&&&&&CLINICAL ASSESSMENT&&&&&');
+    
+    const LOW_MME_MSG = 'Acceptable therapeutic range';
+    const MED_MME_MSG = 'Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone';
+    const HIGH_MME_MSG = 'Avoid, carefully justify dose, increase monitoring, and/or consider prescribing naloxone';
+
+    if (MMETotal <= 20) {
+        $('#assessment').html(LOW_MME_MSG);
+    } else if (MMETotal >= 50) {
+        $('#assessment').html(MED_MME_MSG);
+    } else if (MMETotal >= 90) {
+        $('#assessment').html(HIGH_MME_MSG);
+    }
+};
+
+const displayMMETotal = (MMETotal) => {
+    $('#mme-total').html(MMETotal);
 };
 
 // Add medication to medlist table
@@ -32,24 +68,8 @@ const updateTotalMME = () => {
 //     days_supply: days supply 
 //     date_filled: date filled
 //  }
-
-// should implment sevenDayAvg like updateTotalMME (line 8)
-let sevenDayAvg = 0
-
 const addMedToMedlist = (medData) => {
-    // Create delete button
-    const button = $(document.createElement('button'));
-    button.html('Delete drug');
 
-    // Add event handler to delete button that deletes the button's row
-    $(button).on('click', (evt) => {
-        // Get the button's row and delete it
-        const rowToDelete = $(button).parent();
-        rowToDelete.remove();
-
-        updateTotalMME();
-        incrementSevenDay();
-    });
     
     // Build tr element
     const tr = $(document.createElement('tr'));
@@ -67,23 +87,15 @@ const addMedToMedlist = (medData) => {
     // Calculate MME for medData and add to #med-list table
     $.get('/results', medData, (data) => {
         tr.append(`<td class="med-list-mme">${data.MME}</td>`);
-        tr.append(button);
+        tr.append(buildMedlistRowDeleteButton());
         
         // Append tr to #med-list
         $('#med-list').append(tr);
-        let now = moment().format('YYYY-MM-DD')
-        let sevenDaysAgo = new Date()
-        sevenDaysAgo = moment(sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)).format('YYYY-MM-DD')
-        let input = moment(medData.date_filled)
-        let dateWithinWeek = moment(medData.date_filled).isBetween(sevenDaysAgo, now);
         
-        if (dateWithinWeek) {
-            sevenDayAvg += data.MME
-            console.log(sevenDayAvg, '7 DAY AVERAGE')
-        }
-        
-        updateTotalMME();
-        incrementSevenDay();
+        const MMETotal = calculateTotalMME();
+
+        displayMMETotal(MMETotal);
+        displayClinicalAssessment(MMETotal);
     });
 };
 
@@ -134,24 +146,14 @@ const handleSaveList = (event) => {
 // Reset med list button
 const clearMedList = () => {
     $('#med-list').empty();
-    updateTotalMME();
-    incrementSevenDay();
+
+    const MMETotal = calculateTotalMME();
+
+    displayMMETotal(MMETotal);
+    displayClinicalAssessment(MMETotal);
 };
 
 
-// Clinical assessment pop-up
-const clinicalAssessment = (MMETotal) => {
-    console.log(MMETotal, '&&&&&&CLINICAL ASSESSMENT&&&&&')
-    if (MMETotal <= 20) {
-        // alert('Acceptable therapeutic range');
-        $('#assessment').html('Acceptable therapeutic range');
-    } if (MMETotal >= 50) {
-        // alert('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone')     
-        $('#assessment').html('Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone');
-    } if (MMETotal >= 90) {
-        // alert('Avoid, carefully justify dose, increase monitoring, and consider prescribing naloxone')
-        $('#assessment').html('Avoid, carefully justify dose, increase monitoring, and/or consider prescribing naloxone')
-}};
 
 // EVENT LISTENERS
 document.getElementById('drug-form').addEventListener('submit', handleCalculate);

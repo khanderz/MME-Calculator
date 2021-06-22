@@ -1,7 +1,7 @@
 """Models for MME calculator app."""
 
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import datetime, timedelta
 
 db = SQLAlchemy()
 
@@ -22,6 +22,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email} med_lists={self.med_list}>'
 
+
 #med class
 class Med(db.Model):
     """a med."""
@@ -33,16 +34,38 @@ class Med(db.Model):
                         primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))                    
     opioid_id = db.Column(db.Integer, db.ForeignKey('opioids.opioid_id'))
+
     drug_dose = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+
     days_supply = db.Column(db.Integer, nullable=False)
-    daily_MME = db.Column(db.Numeric)
     date_filled = db.Column(db.Date, nullable=True)   
+    end_date = db.Column(db.Date, nullable=True)
+
+    daily_MME = db.Column(db.Numeric)
 
     opioid = db.relationship("Opioid", backref="med")
+    
+    def __init__(self, drug_dose, quantity, days_supply, daily_MME, date_filled):
+
+        # Calculate end_date based on date_filled + days_supply
+        date_filled = datetime.strptime(date_filled, "%Y-%m-%d").date()
+        end_date = date_filled + timedelta(days=int(days_supply))
+        
+        new_med = super().__init__(  # db.Model.__init__()
+            drug_dose=drug_dose,
+            quantity=quantity,
+            days_supply=days_supply,
+            daily_MME=daily_MME,
+            date_filled=date_filled,
+            end_date=end_date,
+        )
+        
+        return new_med
 
     def __repr__(self):
         return f'<med_id={self.med_id} drug dose={self.drug_dose} quantity={self.quantity} days supply={self.days_supply} daily MME={self.daily_MME} date filled={self.date_filled} User={self.user_id}>'
+
 
 #opioids class
 class Opioid(db.Model):
