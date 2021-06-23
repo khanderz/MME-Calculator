@@ -37,16 +37,17 @@
 
 
     {% block body %}
+
     {% endblock %}
+
+    <form action="/logout">
+      Click to log out of your account:
+        <button type="submit" name="logout">
+          Log Out
+      </button>
+    </form>
     
-     {% block after_body %}
-      <form action="/logout">
-        Click to log out of your account:
-          <button type="submit" name="logout">
-            Log Out
-        </button>
-      </form>
-    {% endblock %}
+    {% block after_body %}{% endblock %}
 
   </body>
 

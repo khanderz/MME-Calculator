@@ -12,11 +12,14 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+DATE_FORMAT = '%Y-%m-%d'
+
 
 #app routes and view functions
 @app.route('/')
 def homepage():
     """View homepage."""
+
     user_id = session.get('user_id')
     user = User.query.get(user_id)
  
@@ -177,8 +180,58 @@ def add():
         return jsonify({'msg': 'medication added',}), 200
     else:
         return jsonify("unauthorized")
+        
 
+@app.route('/api/med_list')
+def get_users_med_list():
+    """Get currently logged in user's med list.
 
+    Can filter by date range.
+    """
+    
+    date_filled = request.args.get('date_filled')
+    end_date = request.args.get('end_date')
+    
+    if date_filled:
+        date_filled = datetime.strptime(date_filled, DATE_FORMAT).date()
+        
+    if end_date:
+        end_date = datetime.strptime(end_date, DATE_FORMAT).date()
+    
+    # Get currently logged in user
+    if 'user_id' in session:
+        user = User.query.options(
+            db.joinedload('med_list')
+        ).get(session['user_id'])
+        
+        if date_filled and end_date:
+            med_list = user.get_meds_by_date_range(
+                date_filled=date_filled,
+                end_date=end_date
+            )
+        else:
+            med_list = user.med_list
+        
+        med_list_json = []
+        for med in med_list:
+            med_list_json.append({
+                'med_id': med.med_id,
+                'user_id': med.user_id,
+                'opioid': {
+                    'opioid_name': med.opioid.opioid_name,
+                    'conversion_factor': float(med.opioid.conversion_factor),
+                },
+                'drug_dose': med.drug_dose,
+                'quantity': med.quantity,
+                'days_supply': med.days_supply,
+                'date_filled': med.date_filled.strftime(DATE_FORMAT),   
+                'end_date': med.end_date.strftime(DATE_FORMAT),
+                'daily_MME': float(med.daily_MME),
+            })
+            
+        return jsonify(med_list_json)
+            
+            
 @app.route('/meds_from_seven_days')
 def get_meds_from_seven_days_ago():
     """Get med list data by data range search"""

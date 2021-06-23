@@ -109,8 +109,11 @@ def get_meds_by_date_range(date_filled, end_date):
         end_date = db.Column(db.Date, nullable=True)
     """
 
-    med_list = Med.query.filter(Med.end_date <= end_date).\
-                filter(Med.date_filled >= date_filled).all()
+    med_list = Med.query.filter(
+        Med.end_date <= end_date
+    ).filter(
+        Med.date_filled >= date_filled
+    ).all()
 
     return med_list
 

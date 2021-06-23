@@ -28,12 +28,11 @@
     {% endif %}
 {% else %}
     <p>Please return to homepage and log in</p>
-{% endif %}    
+{% endif %}
 <br>
 </p>
 
 
-  <div id="site-content">
     <h2>Monthly assessment</h2>
     <canvas id="bar-chart"></canvas>
 
@@ -42,6 +41,6 @@
 Return to homepage <a href="/">here</a>
 {% endblock %}
 
-{% block js %}
+{% block after_body %}
   <script src="/static/js/chart.js"></script>
 {% endblock %}

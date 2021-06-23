@@ -21,6 +21,21 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email} med_lists={self.med_list}>'
+    
+    def get_meds_by_date_range(self, date_filled, end_date):    
+        """Takes in a date_filled and end_date and returns a list of med items that fit within the date range.
+        
+        Args:
+            date_filled (datetime.date): start date
+            end_date (datetime.date): end date
+        """
+        
+        filtered_meds = []
+        for med in self.med_list:
+            if med.end_date <= end_date and med.date_filled >= date_filled:
+                filtered_meds.append(med)
+
+        return filtered_meds
 
 
 #med class
