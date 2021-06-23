@@ -178,6 +178,45 @@ def add():
     else:
         return jsonify("unauthorized")
 
+
+@app.route('/meds_this_month')
+def get_meds_by_date_range():
+    """Get med list data by data range search"""
+
+    # call crud function for date range search
+    # end date is today
+    # date_filled within 7 days ago
+    med_list = crud.get_meds_by_date_range(date_filled, end_date)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# not sure if the following routes are necessary
+
+
 @app.route('/api/calculate-mme')
 def calculate_mme():
     drug = request.args.get('drug')
