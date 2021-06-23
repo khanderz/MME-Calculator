@@ -179,24 +179,24 @@ def add():
         return jsonify("unauthorized")
 
 
-@app.route('/meds_this_month')
-def get_meds_by_date_range():
+@app.route('/meds_from_seven_days')
+def get_meds_from_seven_days_ago():
     """Get med list data by data range search"""
 
     # call crud function for date range search
     # end date is today
     # date_filled within 7 days ago
-    med_list = crud.get_meds_by_date_range(date_filled, end_date)
+    end_date = date.today()
+    date_filled = end_date - timedelta(days=7)
 
+    print(end_date, date_filled, "***************end date and date filled****************")
 
+    med_list = crud.get_meds_by_date_range(date_filled=date_filled, end_date=end_date)
 
+    print(med_list, "&&&&&&&&&&&&&&&& med list &&&&&&&&&&&&&")
+    return med_list
 
-
-
-
-
-
-
+    # return jsonify
 
 
 

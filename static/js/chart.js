@@ -1,3 +1,3 @@
 "use strict";
 
-$.get('/meds_this_month'), (res) => {}
+$.get('/meds_from_seven_days'), (res) => {}
