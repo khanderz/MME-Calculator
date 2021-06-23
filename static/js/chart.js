@@ -46,9 +46,10 @@ const generateDatesForRange = (start, end) => {
 
 const convertToMonthlyChartData = (medList) => {
   const firstDayOfMonth = moment().date(1);
+  console.log(`firstDayOfMonth: ${firstDayOfMonth}`);
   const days = generateDatesForRange(
-    firstDayOfMonth,
-    firstDayOfMonth.add(30, 'days')
+    firstDayOfMonth.format('YYYY-MM-DD'),
+    firstDayOfMonth.add(30, 'days').format('YYYY-MM-DD')
   );
   
   // Create dateAndTotalMME:
@@ -65,34 +66,27 @@ const convertToMonthlyChartData = (medList) => {
     console.log(`med: ${med.opioid.opioid_name}`);
 
     const datesActive = generateDatesForRange(med.date_filled, med.end_date);
-    
     console.log(`datesActive: ${datesActive}`);
-  } 
-    // for each date in range of dates
-      // use date to index into dateLookup
-      // increment value stored there by med.daily_MME
 
-  // Month starts on date 1, goes until end of month (day 30)
-  // [
-  //   {date: 2021-06-01, totalMME: 0}
-    //   ...
-  //   {date: 2021-06-17, totalMME: 0.75}
-  //   {date: 2021-06-18, totalMME: 0}
+    // for each date of datesActive
+      // use date to index into dateAndTotalMME
+      // increment value stored there by med.daily_MME
+    for (const date of datesActive) {
+      dateAndTotalMME[date] += med.daily_MME;
+    }  
+  } 
+  
+  const chartData = [];
+  for (const [ date, totalMME ] of Object.entries(dateAndTotalMME)) {
+    chartData.push({x: date, y: totalMME});
+  }
+  
+  return chartData;
 };
 
 $.get('/api/med_list', (medList) => {
-  convertToMonthlyChartData(medList);
-});
+  const data = convertToMonthlyChartData(medList);
 
-// Plot 30 day MME total
-/*
-$.get('/api/med_list', (medList) => {
-  // x: a day in this month
-  // y: total MME for that day
-  const chartData = convertToMonthlyChartData(medList);
-
-  // Also, to enable scaling by time, you need to import Moment *before*
-  // Chart.js. See `templates/chartjs.html`.
   new Chart(
     $('#bar-chart'),
     {
@@ -100,7 +94,7 @@ $.get('/api/med_list', (medList) => {
       data: {
         datasets: [
           {
-            label: 'All Melons',
+            label: '30 Day Total MME',
             data: data
           }
         ]
@@ -117,4 +111,4 @@ $.get('/api/med_list', (medList) => {
       }
     }
   );
-})*/
+});
