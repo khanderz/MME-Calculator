@@ -195,19 +195,3 @@ document.getElementById('clear-med-list').addEventListener('click', clearMedList
         
 //     })
 // };
-
-const incrementSevenDay = () => {
-    let sevenDay = 0;
-
-
-    // Get all .med-list-mme <td> elements
-    $('.med-list-sevenday').each((idx, el) => {
-        console.log(el);
-
-        sevenDay += Number($(el).html());
-        
-        console.log(`Total after 7-day loop # ${idx}: ${sevenDay}`);
-    });
-
-    $('#7day-mme-total').html(sevenDayAvg);
-};
