@@ -194,25 +194,32 @@ def get_users_med_list():
     
     if date_filled:
         date_filled = datetime.strptime(date_filled, DATE_FORMAT).date()
-        
+
     if end_date:
         end_date = datetime.strptime(end_date, DATE_FORMAT).date()
     
     # Get currently logged in user
     if 'user_id' in session:
-        user = User.query.options(
-            db.joinedload('med_list')
-        ).get(session['user_id'])
-        
+        # user = User.query.options(
+        #     db.joinedload('med_list')
+        # ).get(session['user_id'])
+        user = User.query.get(session['user_id'])
+        print(user.user_id, '**user*********')
+        filtered_med_list = Med.query.filter(Med.date_filled != None, Med.user_id== user.user_id).all()
+        print(filtered_med_list, "FILTERED med_list*********************")
+
+
         if date_filled and end_date:
             med_list = user.get_meds_by_date_range(
                 date_filled=date_filled,
                 end_date=end_date
             )
+            print(med_list, "med_list*********************")
         else:
-            med_list = user.med_list
+            med_list = filtered_med_list
         
         med_list_json = []
+        
         for med in med_list:
             med_list_json.append({
                 'med_id': med.med_id,
@@ -224,7 +231,7 @@ def get_users_med_list():
                 'drug_dose': med.drug_dose,
                 'quantity': med.quantity,
                 'days_supply': med.days_supply,
-                'date_filled': med.date_filled.strftime(DATE_FORMAT),   
+                'date_filled': med.date_filled.strftime(DATE_FORMAT), 
                 'end_date': med.end_date.strftime(DATE_FORMAT),
                 'daily_MME': float(med.daily_MME),
             })
@@ -232,29 +239,6 @@ def get_users_med_list():
         return jsonify(med_list_json)
             
             
-@app.route('/meds_from_seven_days')
-def get_meds_from_seven_days_ago():
-    """Get med list data by data range search"""
-
-    # call crud function for date range search
-    # end date is today
-    # date_filled within 7 days ago
-    end_date = date.today()
-    date_filled = end_date - timedelta(days=7)
-
-    print(end_date, date_filled, "***************end date and date filled****************")
-
-    med_list = crud.get_meds_by_date_range(date_filled=date_filled, end_date=end_date)
-
-    print(med_list, "&&&&&&&&&&&&&&&& med list &&&&&&&&&&&&&")
-    return med_list
-
-    # return jsonify
-
-
-
-
-
 
 
 
@@ -287,97 +271,6 @@ def calculate_mme():
 
     return jsonify({'value': float(MME)})
 
-
-@app.route('/get-seven-day-avg') 
-def save_seven_day():
-    date = request.args.get('date')
-    drug = request.args.get('drug')
-    dose = decimal.Decimal(request.args.get('dose'))
-    quantity = decimal.Decimal(request.args.get('quantity'))
-    days_supply = decimal.Decimal(request.args.get('days_supply'))
-
-    print(date, drug, '@@@@@DATE & DRUG@@@@@')
-    print(dose, quantity, days_supply, '@@@@@ dose, quantity, days supply@@@@@')
-
-    MME = crud.calculate_MME(
-        drug=drug,
-        dose=dose,
-        quantity=quantity,
-        days_supply=days_supply,
-    )
-
-    print(MME, '@@@@@ MME!!!!!!!! @@@@@')
-
-    total = 0
-    day_count = 0
-
-    # for i in range(7):
-    #     start_date = datetime.strptime(date, "%Y-%m-%d")
-    #     end_date = datetime.today() - timedelta(days=i)
-    #     day = datetime.strptime(date, "%Y-%m-%d").date() - timedelta(days=i)
-    #     iso = datetime.strptime(day.isoformat(), "%Y-%m-%d").date()
-    #     print(f"{i} days ago: {iso}")
-        # print(start_date, "***********Start************")
-        # print(end_date, "***********End************")
-
-    start_date = datetime.strptime(date, "%Y-%m-%d")
-    end_date = datetime.today()    
-    # delta = timedelta(days=7)
-
-    # print(start_date, "***********Start************")
-    # print(end_date, "***********End************")  
-
-    for i in range(7):
-        delta = timedelta(days=i)
-        end_date -= delta
-        print(end_date, "***********End************") 
-        count = (end_date - start_date)
-        print(count.days, "########### count days ###############") # should print 5 days (6/21-6/17), but is printing 3 days for 6/24-6/21
-        day_count = abs(count.days) 
-
-    # while start_date < end_date:
-    #     print(start_date) # test date: 2021-6-17
-    #     end_date -= delta #should stop at end date (today or 6/21), but stops at 2021-6-24
-    #     count = (end_date - start_date)
-    #     print(count.days, "########### count days ###############") # should print 5 days (6/21-6/17), but is printing 3 days for 6/24-6/21
-    #     day_count = abs(count.days) 
-
-    print(start_date, "***********Start************")
-    # print(end_date, "***********End************")  
-    print(total, "^^^^^^^^^^^^^^^ total ^^^^^^^^^^^^^^")
-    print(day_count, "^^^^^^^^^^^^^^^ day_count ^^^^^^^^^^^^^^^")    
-
-        # opioid = Opioid.query.filter_by(opioid_name=drug).first()
-        # meds = Med.query.filter_by(date_filled=iso_date, opioid_id=opioid.opioid_id).all()
-        # meds = Med.query.join(Opioid).filter(Med.date_filled==iso, Opioid.opioid_name==drug).all()
-        # ^^ faster query using join method instead (: -thu
-
-        # print(day, iso, "$$$$$$$$$$$$$$ DAY AND ISO $$$$$$$$$$$$")
-
-            # if meds:
-            #     print(meds)
-        # day_count += 1
-            # mmes = [med.daily_MME for med in meds]
-        # total += sum(mmes)
-
-
-    sevenday = 0
-
-    if day_count == 0:   
-        sevenday == 0
-    else:
-        total = MME * day_count
-        sevenday = str(total/day_count)   
-
-    print(sevenday, "&&&&&&&&&&& seven day &&&&&&&&&&")    
-        
-    # calculate the last 7 days
-    # turn last 7 days into datettime objects
-    # query db for those days
-    # if exists, add MME to total and +1 to day_count
-    # divide and return jsonify('seven-day-avg': total/day_count)
-
-    return jsonify({'seven_avg': sevenday})
 
 
 if __name__ == '__main__':

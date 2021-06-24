@@ -146,6 +146,7 @@ const convertToMonthlyChartData = (medList) => {
 
     const datesActive = generateDatesForRange(med.date_filled, med.end_date);
     console.log(`datesActive: ${datesActive}`);
+    } 
 
     // for each date of datesActive
       // use date to index into dateAndTotalMME
@@ -153,7 +154,6 @@ const convertToMonthlyChartData = (medList) => {
     for (const date of datesActive) {
       dateAndTotalMME[date] += med.daily_MME;
     }  
-  } 
   
   const chartData = [];
   for (const [ date, totalMME ] of Object.entries(dateAndTotalMME)) {

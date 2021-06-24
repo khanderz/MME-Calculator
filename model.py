@@ -31,9 +31,11 @@ class User(db.Model):
         """
         
         filtered_meds = []
-        for med in self.med_list:
-            if med.end_date <= end_date and med.date_filled >= date_filled:
-                filtered_meds.append(med)
+
+        if med.date_filled != None:
+            for med in self.med_list:
+                if med.end_date <= end_date and med.date_filled >= date_filled:
+                    filtered_meds.append(med)
 
         return filtered_meds
 
@@ -64,8 +66,13 @@ class Med(db.Model):
     def __init__(self, drug_dose, quantity, days_supply, daily_MME, date_filled):
 
         # Calculate end_date based on date_filled + days_supply
-        date_filled = datetime.strptime(date_filled, "%Y-%m-%d").date()
-        end_date = date_filled + timedelta(days=int(days_supply))
+        
+        if date_filled:
+            date_filled = datetime.strptime(date_filled, "%Y-%m-%d").date()
+            end_date = date_filled + timedelta(days=int(days_supply))
+        else:
+            date_filled = None 
+            end_date = None
         
         new_med = super().__init__(  # db.Model.__init__()
             drug_dose=drug_dose,
