@@ -235,9 +235,9 @@ def get_users_med_list():
                 'end_date': med.end_date.strftime(DATE_FORMAT),
                 'daily_MME': float(med.daily_MME),
             })
-            
-        return jsonify(med_list_json)
-            
+
+
+        return jsonify(med_list_json)            
             
 
 
