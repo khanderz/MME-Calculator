@@ -32,14 +32,21 @@
 
   <body>
 
-      <ul>
+    <div class="topnav">
+      <a class="active" href="/templates/homepage.html">Home</a>
+      <a href="/templates/create_account.html">Create Account</a>
+      <a href="/templates/user_login.html">User Login</a>
+      <a href="/templates/user_details.html">User Dashboard</a>
+      <a href="#contact">Contact</a>
+    </div>
+
       <!-- Allow each page access to stored session flash messages -->
         {% for msg in get_flashed_messages() %}
           <p class="flash-msg">
            {{ msg }}
           </p>
         {% endfor %}
-      </ul>
+    
 
 
     {% block body %}
