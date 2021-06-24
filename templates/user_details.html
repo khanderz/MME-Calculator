@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
 
+<!-- title -->
 {% block title %}{{ user.email }} - Details{% endblock %}
 
 {% block body %}
+<!-- checks if user is logged in, if not, will reroute -->
 {% if user %}
 
+<!-- greeting -->
 <h1>Hello, {{ user.email }}</h1>
 <p>
 
     <h4>User ID: {{ user.user_id }}</h4>
 </p>
+
 <p>
+<!-- user med lists -->
     <h4>Medication lists by {{ user.email }}:</h4>
     {% if user.med_list %}
         {% for drug in user.med_list %}
@@ -32,15 +37,17 @@
 <br>
 </p>
 
-
+<!-- bar charts -->
     <h2>Monthly assessment</h2>
     <canvas id="bar-chart"></canvas>
 
 
 <br>
+<!-- return to homepage -->
 Return to homepage <a href="/">here</a>
 {% endblock %}
 
 {% block after_body %}
+<!-- chart.js file import -->
   <script src="/static/js/chart.js"></script>
 {% endblock %}
