@@ -88,7 +88,7 @@ $.get('/api/med_list', (medList) => {
   const data = convertToMonthlyChartData(medList);
 
   new Chart(
-    $('#bar-chart'),
+    $('#month-bar-chart'),
     {
       type: 'bar',
       data: {
