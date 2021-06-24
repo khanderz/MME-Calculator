@@ -26,6 +26,11 @@ def homepage():
     return render_template('homepage.html', user=user, user_id=user_id)
 
 # User routes
+@app.route('/create_user')
+def render_create_user():
+    
+    return render_template('create_account.html')
+
 @app.route('/user_reg', methods=['POST'])
 def register_user():
     """Create a new user."""
@@ -43,6 +48,11 @@ def register_user():
         flash("Account created successfully! Please log in.")
 
     return redirect('/') 
+
+@app.route('/login_page')
+def render_login_page():
+    
+    return render_template('user_login.html')    
 
 @app.route('/user_login', methods=['POST'])
 def login():
