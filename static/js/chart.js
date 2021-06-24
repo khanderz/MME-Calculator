@@ -44,6 +44,85 @@ const generateDatesForRange = (start, end) => {
   return dates;
 };
 
+
+// WEEKLY CHART
+const convertToWeeklyChartData = (medList) => {
+  const today = moment();
+  const sevenDaysAgo = moment().subtract(7, 'days');
+  console.log(`today: ${today}`);
+  console.log(`sevenDaysAgo: ${sevenDaysAgo}`);
+  const days = generateDatesForRange(
+    sevenDaysAgo.format('YYYY-MM-DD'),
+    today.format('YYYY-MM-DD')
+  );
+
+   // Create dateAndTotalMME:
+  //   date:       totalMME
+  // { 2021-06-01: 0, 2021-06-02: 0}
+  const dateAndTotalMME = {};
+  for (const day of days) {
+    dateAndTotalMME[day] = 0;
+  }  
+
+  // for each med in medlist
+    // generate range of dates starting at date_filled, end at end_date
+  for (const med of medList) {
+    console.log(`med: ${med.opioid.opioid_name}`);
+
+    const datesActive = generateDatesForRange(med.date_filled, med.end_date);
+    console.log(`datesActive: ${datesActive}`);
+
+    // for each date of datesActive
+      // use date to index into dateAndTotalMME
+      // increment value stored there by med.daily_MME
+    for (const date of datesActive) {
+      dateAndTotalMME[date] += med.daily_MME;
+    }  
+  } 
+  
+  const chartData = [];
+  for (const [ date, totalMME ] of Object.entries(dateAndTotalMME)) {
+    chartData.push({x: date, y: totalMME});
+  }
+  
+  return chartData;
+};
+
+
+$.get('/api/med_list', (medList) => {
+  const data = convertToWeeklyChartData(medList);
+
+  new Chart(
+    $('#week-bar-chart'),
+    {
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            label: '7 Day Total Daily MME',
+            data: data
+          }
+        ]
+      },
+      options: {
+        scales: {
+          xAxes: [
+            {
+              type: 'time',
+              distribution: 'series'
+            }
+          ]
+        }
+      }
+    }
+  );
+});
+
+
+
+
+
+// MONTHLY CHART
 const convertToMonthlyChartData = (medList) => {
   const firstDayOfMonth = moment().date(1);
   console.log(`firstDayOfMonth: ${firstDayOfMonth}`);
@@ -94,7 +173,7 @@ $.get('/api/med_list', (medList) => {
       data: {
         datasets: [
           {
-            label: '30 Day Total MME',
+            label: '30 Day Total Daily MME',
             data: data
           }
         ]
@@ -112,3 +191,4 @@ $.get('/api/med_list', (medList) => {
     }
   );
 });
+
