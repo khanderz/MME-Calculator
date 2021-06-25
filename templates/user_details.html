@@ -49,6 +49,14 @@
 Return to homepage <a href="/">here</a>
 {% endblock %}
 
+<!-- logout -->
+<form action="/logout">
+    Click to log out of your account:
+      <button type="submit" name="logout">
+        Log Out
+    </button>
+  </form>
+
 {% block after_body %}
 <!-- chart.js file import -->
   <script src="/static/js/chart.js"></script>
