@@ -77,7 +77,7 @@ def login():
     else:
         flash("Please enter the correct email and password or create a new account.")
         return render_template('user_login.html')
-        
+
 
 @app.route('/logout')
 def logout():
@@ -104,9 +104,6 @@ def show_user(user_id):
 
     if "user_id" in session:
         user = crud.get_user_by_id(user_id)
-        
-        print(user, '****** USER ******')
-        print(user.med_list, '***** USER.MEDLIST **********')
 
         return render_template('user_details.html', user=user)  
     else:
@@ -133,13 +130,12 @@ def addMed():
 
 
     return jsonify({'MME': MME})
-    # return render_template('homepage.html', MME=MME) 
-    # return MME
-    # return render_template('homepage.html')
+
 
 @app.route('/add', methods=['POST'])
 def add():
     """Add new `Med` to user.med_list"""
+
     if "user_id" in session:
     # Query for logged in `User` obj from db
         user = User.query.get(session['user_id'])
@@ -252,38 +248,6 @@ def get_users_med_list():
 
         return jsonify(med_list_json)            
             
-
-
-
-
-
-
-
-
-
-
-
-
-# not sure if the following routes are necessary
-
-
-@app.route('/api/calculate-mme')
-def calculate_mme():
-    drug = request.args.get('drug')
-
-    dose = decimal.Decimal(request.args.get('dose', 0))
-    quantity = decimal.Decimal(request.args.get('quantity', 0))
-    days_supply = decimal.Decimal(request.args.get('days_supply', 0))
-   
-    MME = crud.calculate_MME(
-        drug=drug,
-        dose=dose,
-        quantity=quantity,
-        days_supply=days_supply,
-    )
-
-    return jsonify({'value': float(MME)})
-
 
 
 if __name__ == '__main__':
