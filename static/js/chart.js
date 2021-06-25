@@ -105,6 +105,13 @@ $.get('/api/med_list', (medList) => {
         ]
       },
       options: {
+        datasets: {
+          bar: {
+            backgroundColor: () => {
+              return randomColor();
+            }
+          }
+        },
         scales: {
           xAxes: [
             {
@@ -179,6 +186,13 @@ $.get('/api/med_list', (medList) => {
         ]
       },
       options: {
+        datasets: {
+          bar: {
+            backgroundColor: () => {
+              return randomColor();
+            }
+          }
+        },
         scales: {
           xAxes: [
             {

@@ -72,14 +72,10 @@ def login():
 
     user = crud.get_user_by_email_and_password(email, password)
 
-    print("~"*20)
-    print(session)
 
     if user:
         session["user_email"] = user.email
         session["user_id"] = user.user_id
-        print("~"*20)
-        print(session)
         flash(f"Hello {user.email}! You are now logged in.")
         return render_template('user_details.html', user=user, user_id=user.user_id)
     else:
@@ -93,14 +89,9 @@ def login():
 def logout():
     """Allow a logged in user to logout."""
 
-    print("~"*20)
-    print(session)
-
     if session:
         session.pop("user_id")
         session.pop("user_email")
-        print("~"*20)
-        print(session)
         flash("You are now logged out.")
 
     else:
