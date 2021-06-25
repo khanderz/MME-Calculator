@@ -25,6 +25,17 @@ def homepage():
  
     return render_template('homepage.html', user=user, user_id=user_id)
 
+
+@app.route('/resources')
+def resources_page():
+    """View resources page."""
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+ 
+    return render_template('resources.html', user=user, user_id=user_id)
+
+
 # User routes
 @app.route('/create_user')
 def render_create_user():
@@ -99,6 +110,7 @@ def logout():
     
     return redirect('/')   
 
+
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user"""
@@ -113,6 +125,7 @@ def show_user(user_id):
         flash("You are not currently logged in. Please login to view your dashboard.")
     
     return redirect('/')    
+
 
 # MME and drug routes
 @app.route('/results')
