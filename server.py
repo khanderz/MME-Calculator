@@ -48,7 +48,7 @@ def register_user():
         crud.create_user(email, password)
         flash("Account created successfully! Please log in.")
         return render_template('user_login.html')
-        
+
 
 @app.route('/login_page')
 def render_login_page():
@@ -73,10 +73,11 @@ def login():
         print("~"*20)
         print(session)
         flash(f"Hello {user.email}! You are now logged in.")
+        return render_template('user_details.html', user=user)
     else:
         flash("Please enter the correct email and password or create a new account.")
-
-    return redirect('/')
+        return render_template('user_login.html')
+        
 
 @app.route('/logout')
 def logout():
@@ -100,6 +101,7 @@ def logout():
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user"""
+
     if "user_id" in session:
         user = crud.get_user_by_id(user_id)
         
