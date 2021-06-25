@@ -43,11 +43,12 @@ def register_user():
     if user:
         flash("""Could not create account because an account with this email already
                exists. Please try again.""")
+        return render_template('create_account.html')
     else:
         crud.create_user(email, password)
         flash("Account created successfully! Please log in.")
-
-    return redirect('/') 
+        return render_template('user_login.html')
+        
 
 @app.route('/login_page')
 def render_login_page():
