@@ -57,6 +57,9 @@ def render_login_page():
 
     user_id = session.get('user_id')
     user = User.query.get(user_id)
+
+    if user:
+        flash(f"Hello {user.email}! You are already logged in.")
     
     return render_template('user_login.html', user_id=user_id)    
 
