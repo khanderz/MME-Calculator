@@ -99,7 +99,7 @@ $.get('/api/med_list', (medList) => {
       data: {
         datasets: [
           {
-            label: '7 Day Total Daily MME',
+            label: 'Total Daily MME',
             data: data
           }
         ]
@@ -180,7 +180,7 @@ $.get('/api/med_list', (medList) => {
       data: {
         datasets: [
           {
-            label: '30 Day Total Daily MME',
+            label: 'Total Daily MME',
             data: data
           }
         ]
