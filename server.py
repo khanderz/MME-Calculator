@@ -28,8 +28,10 @@ def homepage():
 # User routes
 @app.route('/create_user')
 def render_create_user():
-    
-    return render_template('create_account.html')
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    return render_template('create_account.html', user_id=user_id)
 
 @app.route('/user_reg', methods=['POST'])
 def register_user():
@@ -52,8 +54,11 @@ def register_user():
 
 @app.route('/login_page')
 def render_login_page():
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
     
-    return render_template('user_login.html')    
+    return render_template('user_login.html', user_id=user_id)    
 
 @app.route('/user_login', methods=['POST'])
 def login():
@@ -73,10 +78,12 @@ def login():
         print("~"*20)
         print(session)
         flash(f"Hello {user.email}! You are now logged in.")
-        return render_template('user_details.html', user=user)
+        return render_template('user_details.html', user=user, user_id=user.user_id)
     else:
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
         flash("Please enter the correct email and password or create a new account.")
-        return render_template('user_login.html')
+        return render_template('user_login.html', user_id=user_id)
 
 
 @app.route('/logout')
@@ -101,15 +108,17 @@ def logout():
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user"""
-
     if "user_id" in session:
         user = crud.get_user_by_id(user_id)
+        
+        print(user, '****** USER ******')
+        print(user.med_list, '***** USER.MEDLIST **********')
 
         return render_template('user_details.html', user=user)  
     else:
         flash("You are not currently logged in.")
     
-    return redirect('/')       
+    return redirect('/')    
 
 # MME and drug routes
 @app.route('/results')
@@ -135,7 +144,6 @@ def addMed():
 @app.route('/add', methods=['POST'])
 def add():
     """Add new `Med` to user.med_list"""
-
     if "user_id" in session:
     # Query for logged in `User` obj from db
         user = User.query.get(session['user_id'])
@@ -248,6 +256,7 @@ def get_users_med_list():
 
         return jsonify(med_list_json)            
             
+
 
 
 if __name__ == '__main__':

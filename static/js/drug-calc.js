@@ -136,7 +136,7 @@ const handleSaveList = (event) => {
         console.log(response);
         if (response.msg === 'medication added') {
             addMedToMedlist(formData);
-            alert('Medication added to your database. You can now view the medication in your user details page.');
+            alert('Medication added to your database. You can now view the medication in your user dashboard.');
         } else {
             alert('Please login');
         }
