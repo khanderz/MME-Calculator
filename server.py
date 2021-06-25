@@ -120,7 +120,12 @@ def show_user(user_id):
         print(user, '****** USER ******')
         print(user.med_list, '***** USER.MEDLIST **********')
 
-        return render_template('user_details.html', user=user, user_id=user_id)  
+        today = date.today()
+        ago = today - timedelta(days=7)
+        # month = datetime.now().month
+        month = today.strftime("%B")
+
+        return render_template('user_details.html', user=user, user_id=user_id, ago=ago, today=today, month=month)  
     else:
         flash("You are not currently logged in. Please login to view your dashboard.")
     
