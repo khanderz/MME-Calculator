@@ -117,9 +117,9 @@ def show_user(user_id):
         print(user, '****** USER ******')
         print(user.med_list, '***** USER.MEDLIST **********')
 
-        return render_template('user_details.html', user=user)  
+        return render_template('user_details.html', user=user, user_id=user_id)  
     else:
-        flash("You are not currently logged in.")
+        flash("You are not currently logged in. Please login to view your dashboard.")
     
     return redirect('/')    
 

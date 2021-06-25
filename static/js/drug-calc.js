@@ -159,39 +159,3 @@ const clearMedList = () => {
 document.getElementById('drug-form').addEventListener('submit', handleCalculate);
 document.getElementById('save-list-button').addEventListener('click', handleSaveList);
 document.getElementById('clear-med-list').addEventListener('click', clearMedList);
-
-
-// FEATURES
-// 7 day daily average feature
-// MME sum [(today + 7 days from med.date_filled) divided by 7]
-
-// function sevenDay() {
-//     let dateFilled = $('#date_filled').val()
-//     let drugName = $('#drug').val()
-//     let dose = $('#dose').val()
-//     let quantity = $('#quantity').val()
-//     let days_supply = $('#days_supply').val()
-
-//     console.log(dateFilled)
-
-//     let args = {
-//         'date': dateFilled,
-//         'drug': drugName,
-//         'dose': dose,
-//         'quantity': quantity,
-//         'days_supply': days_supply
-//     }
-
-//     $.get('/get-seven-day-avg', args, (res) => {
-//         // check if dateFilled < today and dateFilled > than 7 days ago then send request 
-//         tr.append(`<td class="med-list-sevenday">${res.seven_avg}</td>`);
-//         console.log(res);
-//         console.log(res.seven_avg);
-        
-//         // Append tr to #med-list
-//         $('#med-list').append(tr);
-
-//         // $('#7day-mme-total').html(Number(res.seven_avg))
-        
-//     })
-// };
