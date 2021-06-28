@@ -8,11 +8,16 @@
 {% if user %}
 
 <!-- greeting -->
-<h1>Hello, {{ user.email }}</h1>
-<p>
+<div class="d-flex justify-content-center"> 
+    <h1>Hello, {{ user.email }}</h1>
+</div>
 
+<div class="d-flex justify-content-center"> 
+<p>
     <h4>User ID: {{ user.user_id }}</h4>
 </p>
+</div>
+
 
 <p>
 <!-- user med lists -->
@@ -37,14 +42,37 @@
 <br>
 </p>
 
+
+<div class="parent-container d-flex">
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col">
 <!-- bar charts -->
     <h2>Weekly assessment chart</h2>
     <p>This chart plots the data for drugs active from 7 days ago ({{ ago }}) to today ({{ today }}). </p>
     <canvas id="week-bar-chart"></canvas>
 
+</div>
+</div>    
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+      <div class="col">
+
     <h2>Monthly assessment chart</h2>
     <p>This chart plots the data for drugs active for this month of {{ month }}. </p>
     <canvas id="month-bar-chart"></canvas>
+
+</div> 
+</div>
+</div>
+</div>   
 
 <br>
 
