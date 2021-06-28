@@ -83,12 +83,18 @@ def login():
 
     user = crud.get_user_by_email_and_password(email, password)
 
+    # chart descriptions
+    today = date.today()
+    ago = today - timedelta(days=7)
+    # month = datetime.now().month
+    month = today.strftime("%B")
+
 
     if user:
         session["user_email"] = user.email
         session["user_id"] = user.user_id
         flash(f"Hello {user.email}! You are now logged in.")
-        return render_template('user_details.html', user=user, user_id=user.user_id)
+        return render_template('user_details.html', user=user, user_id=user.user_id, ago=ago, today=today, month=month)
     else:
         user_id = session.get('user_id')
         user = User.query.get(user_id)
@@ -120,6 +126,8 @@ def show_user(user_id):
         print(user, '****** USER ******')
         print(user.med_list, '***** USER.MEDLIST **********')
 
+
+        # chart descriptions
         today = date.today()
         ago = today - timedelta(days=7)
         # month = datetime.now().month
