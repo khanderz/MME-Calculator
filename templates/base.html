@@ -18,16 +18,21 @@
       <!-- random color import -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js"></script>
 
+      <!-- Bootstrap import -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
       <!-- favicons -->
       <link rel="icon" type="image/png" href="/static/img/Pill-favicon-16x16.png" sizes="16x16">
       <link rel="icon" type="image/png" href="/static/img/Pill-favicon-36x36.png" sizes="32x32">
       <link rel="icon" type="image/png" href="/static/img/Pill-favicon-96x96.png" sizes="96x96">
 
       <title>
-      {% block title %}{% endblock %}
+      {% block title %}
+      {% endblock %}
     </title>
 
-      {% block head %}{% endblock %}
+      {% block head %}
+      {% endblock %}
   </head>
 
   <body>
@@ -47,20 +52,17 @@
           </p>
         {% endfor %}
     
+     
+    <!-- Script tags from getbootstrap.com -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
     {% block body %}
-
     {% endblock %}
-
-    <!-- <form action="/logout">
-      Click to log out of your account:
-        <button type="submit" name="logout">
-          Log Out
-      </button>
-    </form> -->
     
-    {% block after_body %}{% endblock %}
+    {% block after_body %}
+    {% endblock %}
 
   </body>
 

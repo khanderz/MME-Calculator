@@ -10,7 +10,7 @@ Per CDC: Calculating the MME of opioids helps identify patients who may benefit 
 *There is no completely safe opioid dose, and this calculator does not substitute for clinical judgment. Use caution when prescribing opioids at any dosage, and prescribe the lowest effective dose.*
 
 ## Features: 
-Weekly and monthly charts on the user dashboard displays 7 day and 30 day total daily MMEs. This feature would allow the clinician to assess when a person experienced one or more days in the last 7 days/30 days where their cumulative MME from opioid prescriptions exceeded 90 MME, increasing their risk of opioid addiction.
+Weekly and monthly charts on the user dashboard displays 7-day and 30-day total daily MMEs. This feature would allow the clinician to assess when a person experienced one or more days in the last 7 days/30 days where their cumulative MME from opioid prescriptions exceeded 90 MME, increasing their risk of opioid addiction.
 
 ## Install: 
 `git clone https://github.com/khanderz/MME-Calculator.git`  
