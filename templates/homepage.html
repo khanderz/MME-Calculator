@@ -3,7 +3,7 @@
 {% block body %}
 
 <body>
-  <h1>Morphine Milligram Equivalent (MME) Calculator</h1>
+  <div class="d-flex justify-content-center"><h1>Morphine Milligram Equivalent (MME) Calculator</h1> </div>
 
   <main>
     <div class="parent-container d-flex">
@@ -12,9 +12,9 @@
 
         <div class="row">
 
-          <div class="co-lg-6">
+          <div class="col">
 
-                <p id="drug">Drug</p>
+                <p>Drug</p>
                 <form name="drug-form" id="drug-form">
                   <select name="drug" id="drug">
                     <option value="Codeine">Codeine</option>
@@ -34,16 +34,16 @@
                     <option value="Tapentadol">Tapentadol</option>
                   </select>
 
-                  <p id="TDD">Total Daily Dose</p>
+                  <p>Total Daily Dose</p>
                   <input type="text" name="dose" id="dose"> in mg (mcg for Fentanyl)
 
-                  <p id="quantity">Quantity</p>
+                  <p>Quantity</p>
                   <input type="text" name="quantity" id="quantity">
 
-                  <p id="DS">Days Supply</p>
+                  <p>Days Supply</p>
                   <input type="text" name="days_supply" id="days_supply">
 
-                  <p id="DF">Date Filled</p>
+                  <p>Date Filled</p>
                   <input type="datetime" name="date_filled" id="date_filled"> (format YYYY-MM-DD) <br>
 
 
@@ -61,7 +61,7 @@
 
       <div class="row">
 
-        <div class="col-lg-6"></div>
+        <div class="col"></div>
 
                 <section id="your-medList">
                   <h1>Medication list</h1>
@@ -80,15 +80,17 @@
 
                     <tbody id="med-list"></tbody>
                   </table>
+                 
           </div> 
       </div>
     </div>
   </div>  
+
   
 
   <div class="container">
 
-    <div class="row">
+    <div class="d-flex justify-content-center">
           <h2>
             <p>
               Total MME: <span id="mme-total"></span>
@@ -96,7 +98,7 @@
           </h2>  
     </div>       
 
-    <div class="row">  
+    <div class="d-flex justify-content-center">  
           <h2>   
             <p> 
               Clinical assessment: <span id="assessment"></span>
