@@ -242,7 +242,14 @@ def get_users_med_list():
         # ).get(session['user_id'])
         user = User.query.get(session['user_id'])
         print(user.user_id, '**user*********')
-        filtered_med_list = Med.query.filter(Med.date_filled != None, Med.user_id== user.user_id).all()
+
+        today = date.today()
+        ago = today - timedelta(days=7)
+
+        filtered_med_list = Med.query.filter(
+                            Med.date_filled != None, 
+                            Med.user_id== user.user_id,
+                            ).all()
         print(filtered_med_list, "FILTERED med_list*********************")
 
 

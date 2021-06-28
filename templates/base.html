@@ -33,17 +33,20 @@
 
       {% block head %}
       {% endblock %}
+
+      
   </head>
 
   <body>
 
-    <div class="topnav">
-      <a class="active" href="/">Home</a>
+
+      <nav class="navbar navbar-light bg-light">
+      <a href="/"> <img src="/static/img/Pill-favicon-36x36.png" width="30" height="30" alt=""> </a>
       <a href="/create_user">Create Account</a>
       <a href="/login_page">User Login</a>
       <a href="/users/{{user_id}}">User Dashboard</a>
       <a href="/resources">Resources</a>
-    </div>
+    </nav>
     
       <!-- Allow each page access to stored session flash messages -->
         {% for msg in get_flashed_messages() %}

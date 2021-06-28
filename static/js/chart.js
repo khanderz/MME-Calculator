@@ -68,21 +68,21 @@ const convertToWeeklyChartData = (medList) => {
     // generate range of dates starting at date_filled, end at end_date
   for (const med of medList) {
     console.log(`med: ${med.opioid.opioid_name}`);
-    const date_filled = med.date_filled
-    console.log(`date_filled: ${date_filled}`);
 
     const datesActive = generateDatesForRange(med.date_filled, med.end_date);
     console.log(`datesActive: ${datesActive}`);
+    
 
     // for each date of datesActive
       // use date to index into dateAndTotalMME
       // increment value stored there by med.daily_MME
     for (const date of datesActive) {
-      dateAndTotalMME[date] += med.daily_MME;
+        dateAndTotalMME[date] += med.daily_MME;
     }  
   } 
   
   const chartData = [];
+  
   for (const [ date, totalMME ] of Object.entries(dateAndTotalMME)) {
     chartData.push({x: date, y: totalMME});
   }
