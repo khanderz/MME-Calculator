@@ -26,6 +26,10 @@
       <link rel="icon" type="image/png" href="/static/img/Pill-favicon-36x36.png" sizes="32x32">
       <link rel="icon" type="image/png" href="/static/img/Pill-favicon-96x96.png" sizes="96x96">
 
+
+       
+  
+
       <title>
       {% block title %}
       {% endblock %}
@@ -34,18 +38,22 @@
       {% block head %}
       {% endblock %}
 
+      <link href="/static/css/homepage.css"  rel="stylesheet">
+
       
   </head>
 
   <body>
 
 
-      <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-expand-md nav-transparent w-100">
+      <div class="container-fluid">
       <a href="/"> <img src="/static/img/Pill-favicon-36x36.png" width="30" height="30" alt=""> </a>
       <a href="/create_user">Create Account</a>
       <a href="/login_page">User Login</a>
       <a href="/users/{{user_id}}">User Dashboard</a>
       <a href="/resources">Resources</a>
+      </div>
     </nav>
     
       <!-- Allow each page access to stored session flash messages -->

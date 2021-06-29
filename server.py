@@ -54,13 +54,20 @@ def register_user():
     user = crud.get_user_by_email(email)
 
     if user:
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
+
         flash("""Could not create account because an account with this email already
                exists. Please try again.""")
-        return render_template('create_account.html')
+        return render_template('create_account.html', user_id=user_id)
     else:
         crud.create_user(email, password)
+
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
+        
         flash("Account created successfully! Please log in.")
-        return render_template('user_login.html')
+        return render_template('user_login.html', user_id=user_id)
 
 
 @app.route('/login_page')
