@@ -18,7 +18,7 @@
 
           <div class="col">
 
-                <p>Drug</p>
+                Drug
                 <form name="drug-form" id="drug-form">
                   <select name="drug" id="drug">
                     <option value="Codeine">Codeine</option>
@@ -37,25 +37,35 @@
                     <option value="Oxymorphone">Oxymorphone</option>
                     <option value="Tapentadol">Tapentadol</option>
                   </select>
+                  <br>
+                  <br>
 
-                  <p>Total Daily Dose</p>
-                  <input type="text" name="dose" id="dose"> in mg (mcg for Fentanyl)
+                  Total Daily Dose<br>
+                  <input class="custom-input" type="text" name="dose" id="dose"> in mg (mcg for Fentanyl)
+                  <br>
+                  <br>
 
-                  <p>Quantity</p>
-                  <input type="text" name="quantity" id="quantity">
+                  Quantity<br>
+                  <input class="custom-input" type="text" name="quantity" id="quantity">
+                  <br>
+                  <br>
 
-                  <p>Days Supply</p>
-                  <input type="text" name="days_supply" id="days_supply">
+                  Days Supply<br>
+                  <input class="custom-input" type="text" name="days_supply" id="days_supply">
+                  <br>
+                  <br>
 
-                  <p>Date Filled</p>
-                  <input type="datetime" name="date_filled" id="date_filled"> (format YYYY-MM-DD) <br>
+                  Date Filled<br>
+                  <input class="custom-input" type="datetime" name="date_filled" id="date_filled"> (format YYYY-MM-DD) 
+                  <br>
+                  <br>
 
 
-                  <input id='calculate-button' type="submit" value="Add med" form="drug-form">
+                  <input class="btn custom-button-1" id='calculate-button' type="submit" value="Add med" form="drug-form">
 
-                  <input id='save-list-button' type="button" value="Save med to your database">
+                  <input class="btn custom-button-1" id='save-list-button' type="button" value="Save med to your database">
 
-                  <input id='clear-med-list' type="button" value="Clear med list">
+                  <input class="btn custom-button-1" id='clear-med-list' type="button" value="Clear med list">
             </div>
         </div>    
     </div>
@@ -85,32 +95,34 @@
 
                     <tbody id="med-list"></tbody>
                   </table>
-                 
-          </div> 
-      </div>
-    </div>
-  </div>  
-
+                <br>
+                <br>
+                <br>
+                <br>
   
-
-  <div class="container">
-
-    <div class="d-flex justify-content-center">
           <h2>
             <p>
               Total MME: <span id="mme-total"></span>
             </p>
           </h2>  
-    </div>       
 
-    <div class="d-flex justify-content-center">  
           <h2>   
             <p> 
               Clinical assessment: <span id="assessment"></span>
             </p>
           </h2>    
-      </div>     
-  </div>       
+
+          <!-- logout -->
+        <form action="/logout">
+             Click to log out of your account:
+            <button class="btn custom-button-1" type="submit" name="logout">
+              Log Out
+            </button>
+</form>
+        </div> 
+      </div>
+    </div>
+  </div>          
 
   </main>
   </form>
@@ -120,12 +132,5 @@
 </div>
 </body>
 
-<!-- logout -->
-<form action="/logout">
-  Click to log out of your account:
-    <button type="submit" name="logout">
-      Log Out
-  </button>
-</form>
 
 {% endblock %}

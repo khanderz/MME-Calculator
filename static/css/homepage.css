@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap');
 
-
+/* transparent nav bar */
 .homepage nav {
     position: fixed;
     top: 0;
@@ -28,6 +28,8 @@
     color: #ffec5c;
   }
   
+  /* homepage  */
+
   .homepage > section.container-fluid,
   .homepage > section.container {
     width: 100vw;
@@ -35,12 +37,15 @@
     padding-top: 56px;
   }
   
+  /* body */
 
    body {
     font-family: 'Oxygen' ;
     background: url('/static/img/pale_yellow2.jpg') no-repeat center center fixed;
   }
 
+
+  /* underline wipe effects for links on resource pages */
   .line-wipe {
     position: relative;
     text-decoration: none !important;
@@ -60,4 +65,41 @@
   .line-wipe:hover:after {
     width: 100%;
     border-bottom-color: rgb(0, 86, 179);
+  }
+
+/* forms */
+  
+.custom-input {
+    padding: 0.5em;
+    border: 0;
+    border-bottom: 1px solid black;
+  }
+  
+  .custom-input:focus {
+    border-bottom: 2px solid rgb(55, 170, 243);
+  }
+  
+  .custom-button-1 {
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: 2px 2px 0 black;
+    background: white;
+  }
+  
+  .custom-button-1:hover {
+    background: black;
+    color: white;
+    box-shadow: 2px 2px 0 gray;
+  }
+
+
+  /* chart containers */
+
+  .chart {
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: 2px 2px 0 black;
+    background: white;
+    width: 50vw;
+   
   }

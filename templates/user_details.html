@@ -19,9 +19,10 @@
 </div>
 
 
-<p>
 <!-- user med lists -->
-    <h4>Medication lists by {{ user.email }}:</h4>
+<div class="text-center">
+<p>
+    <h4>{{ user.email }}'s Medication List:</h4>
     {% if user.med_list %}
         {% for drug in user.med_list %}
             <li>Drug: {{ drug.opioid.opioid_name }} 
@@ -41,29 +42,26 @@
 {% endif %}
 <br>
 </p>
+</div>
 
 
-<div class="parent-container d-flex">
 
-    <div class="container">
 
-      <div class="row">
 
-        <div class="col">
 <!-- bar charts -->
+<div class="d-flex justify-content-center">
+    <div class="chart">
     <h2>Weekly assessment chart</h2>
     <p>This chart plots the data for drugs active from 7 days ago ({{ ago }}) to today ({{ today }}). </p>
     <canvas id="week-bar-chart"></canvas>
 
 </div>
-</div>    
 </div>
+<br>
+<br>
 
-<div class="container">
-
-    <div class="row">
-
-      <div class="col">
+<div class="d-flex justify-content-center">
+<div class="chart">
 
     <h2>Monthly assessment chart</h2>
     <p>This chart plots the data for drugs active for this month of {{ month }}. </p>
@@ -71,15 +69,14 @@
 
 </div> 
 </div>
-</div>
-</div>   
+   
 
 <br>
 
 <!-- logout -->
 <form action="/logout">
     Click to log out of your account:
-      <button type="submit" name="logout">
+      <button class="btn custom-button-1" type="submit" name="logout">
         Log Out
     </button>
   </form>
