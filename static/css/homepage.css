@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap');
+
+
 .homepage nav {
     position: fixed;
     top: 0;
@@ -34,5 +37,27 @@
   
 
    body {
+    font-family: 'Oxygen' ;
     background: url('/static/img/pale_yellow2.jpg') no-repeat center center fixed;
+  }
+
+  .line-wipe {
+    position: relative;
+    text-decoration: none !important;
+    display: inline-block;
+  }
+  
+  .line-wipe:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid rgb(55, 170, 243);
+    transition: 0.5s width;
+  }
+  
+  .line-wipe:hover:after {
+    width: 100%;
+    border-bottom-color: rgb(0, 86, 179);
   }
