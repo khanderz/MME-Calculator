@@ -1,4 +1,4 @@
-/* .homepage nav {
+.homepage nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -32,16 +32,7 @@
     padding-top: 56px;
   }
   
-  .demo-1 {
-    background: no-repeat center/cover url('/static/img/blue_pink.jpg');
-  }
-   */
-
 
    body {
     background: url('/static/img/pale_yellow2.jpg') no-repeat center center fixed;
-
-    /* background-size: cover; */
-    width: 100vw;
-    height: 100vh;
   }

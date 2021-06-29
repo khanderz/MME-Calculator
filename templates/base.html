@@ -45,14 +45,23 @@
 
   <body>
 
-
     <nav class="navbar navbar-expand-md nav-transparent w-100">
       <div class="container-fluid">
-      <a href="/"> <img src="/static/img/Pill-favicon-36x36.png" width="30" height="30" alt=""> </a>
-      <a href="/create_user">Create Account</a>
-      <a href="/login_page">User Login</a>
-      <a href="/users/{{user_id}}">User Dashboard</a>
-      <a href="/resources">Resources</a>
+      <a class="navbar-brand" href="/"> <img src="/static/img/Pill-favicon-36x36.png" width="30" height="30" alt=""> </a>
+      <div id="navbar" class="navbar-collapse collapse navbar-expand-lg">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+      <a class="nav-link" href="/create_user">Create Account</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" href="/login_page">User Login</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" href="/users/{{user_id}}">User Dashboard</a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link" href="/resources">Resources</a>
+    </li>
       </div>
     </nav>
     
