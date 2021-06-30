@@ -103,3 +103,13 @@
     width: 50vw;
    
   }
+
+  /* user dashboard containers */
+  .overflow-y {
+    overflow-y: auto !important;
+  }
+  
+  .content {
+    margin-bottom: 25% !important;
+  }
+  

@@ -8,67 +8,85 @@
 {% if user %}
 
 <!-- greeting -->
-<div class="d-flex justify-content-center"> 
-    <h1>Hello, {{ user.email }}</h1>
-</div>
 
-<div class="d-flex justify-content-center"> 
-<p>
-    <h4>User ID: {{ user.user_id }}</h4>
-</p>
-</div>
+<!-- <div class="d-flex justify-content-center">  -->
+   
+<section class="container">
+   <div class="row justify-content-center align-items-center">
+       <div class="col-8 text-center">
+            <p class="lead">    
+                    <h1>Hello, {{ user.email }}</h1>
+
+                <p>
+                    <h4>User ID: {{ user.user_id }}</h4>
+                </p>
+        </div>
+    </div>
+</section>
 
 
 <!-- user med lists -->
 <div class="text-center">
-<p>
-    <h4>{{ user.email }}'s Medication List:</h4>
-    {% if user.med_list %}
-        {% for drug in user.med_list %}
-            <li>Drug: {{ drug.opioid.opioid_name }} 
-                Dose: {{ drug.drug_dose }}
-                Quantity: {{ drug.quantity }}
-                Days Supply: {{ drug.days_supply }}
-                Date Filled: {{ drug.date_filled }} 
-                Total Daily MME: {{ drug.daily_MME }} 
-               </li>
-            <br>
-        {% endfor %}
-    {% else %}
-        <li>No medication lists by this user </li>
-    {% endif %}
-{% else %}
-    <p>Please return to homepage and log in</p>
-{% endif %}
-<br>
-</p>
-</div>
 
+    <section class="h-100 mx-3 full-columns">
+        <div class="row h-100">
+          <aside class="col-4 h-100 bg-light d-flex justify-content-center">
+            <div class="container my-4">
+              <p class="lead">
+
+                        <p>
+                            <h4>{{ user.email }}'s Medication List:</h4>
+                            {% if user.med_list %}
+                                {% for drug in user.med_list %}
+                                    <li>Drug: {{ drug.opioid.opioid_name }} 
+                                        Dose: {{ drug.drug_dose }}
+                                        Quantity: {{ drug.quantity }}
+                                        Days Supply: {{ drug.days_supply }}
+                                        Date Filled: {{ drug.date_filled }} 
+                                        Total Daily MME: {{ drug.daily_MME }} 
+                                    </li>
+                                    <br>
+                                {% endfor %}
+                            {% else %}
+                                <li>No medication lists by this user </li>
+                            {% endif %}
+                        {% else %}
+                            <p>Please return to homepage and log in</p>
+                        {% endif %}
+                <br>
+            </p>
+            <img src="/static/img/assessment.jpeg" width="550" height="550">
+        </div>
+      </aside>
 
 
 
 
 <!-- bar charts -->
-<div class="d-flex justify-content-center">
-    <div class="chart">
-    <h2>Weekly assessment chart</h2>
-    <p>This chart plots the data for drugs active from 7 days ago ({{ ago }}) to today ({{ today }}). </p>
-    <canvas id="week-bar-chart"></canvas>
 
-</div>
-</div>
-<br>
-<br>
+        <main class="col h-100 overflow-y">
+            <div class="container py-4 content">
 
-<div class="d-flex justify-content-center">
-<div class="chart">
+                                <div class="chart">
+                                <h2>Weekly assessment chart</h2>
+                                <p>This chart plots the data for drugs active from 7 days ago ({{ ago }}) to today ({{ today }}). </p>
+                                <canvas id="week-bar-chart"></canvas>
 
-    <h2>Monthly assessment chart</h2>
-    <p>This chart plots the data for drugs active for this month of {{ month }}. </p>
-    <canvas id="month-bar-chart"></canvas>
+                            </div>
+                        
+                            <br>
+                            <br>
 
-</div> 
-</div>
+                            <div class="chart">
+
+                                <h2>Monthly assessment chart</h2>
+                                <p>This chart plots the data for drugs active for this month of {{ month }}. </p>
+                                <canvas id="month-bar-chart"></canvas>
+                            </div>
+            </div>
+        </main>                       
+    </div>
+    </section>
    
 
 <br>
