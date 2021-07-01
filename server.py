@@ -158,11 +158,8 @@ def addMed():
     days_supply = decimal.Decimal(request.args.get('days_supply'))
     date_filled = request.args.get('date_filled', 0)
 
-    print('^^^^^^^^^^', drug, dose, quantity, days_supply, '^^^^^^^^^^')
 
     MME = float(crud.calculate_MME(drug=drug, dose=dose, quantity=quantity, days_supply=days_supply)) 
-
-    print(MME, '********** MME *************')
 
 
     return jsonify({'MME': MME})
@@ -171,17 +168,14 @@ def addMed():
 @app.route('/add', methods=['POST'])
 def add():
     """Add new `Med` to user.med_list"""
+
     if "user_id" in session:
     # Query for logged in `User` obj from db
         user = User.query.get(session['user_id'])
-        print(user, '********** USER ************')
 
     # Query for `Opioid` from db, by drug name (from request.form)
         drug = request.form.get('drug')
         opioid = crud.get_opioid_by_name(opioid_name=drug)
-    
-        print(drug, '&&&&&&&& drug &&&&&&&&&&')
-        print(opioid, '^^^^^^^^^^ OPIOID  ^^^^^^^^^^^^^^^')
 
     # Create `Med` object, `Med` attributes:
     # drug_dose = db.Column(db.Integer)
@@ -197,8 +191,6 @@ def add():
         if request.form.get('date_filled', None) != "": 
             date_filled = request.form.get('date_filled', None)
 
-        print(date_filled, '####### DATE FILLED #######')
-        print(drug_dose, quantity, days_supply, '#######FORM INPUT#######')
 
         MME = crud.calculate_MME(
             drug=drug,
@@ -206,8 +198,6 @@ def add():
             quantity=quantity,
             days_supply=days_supply,
         )
-
-        print(MME, '######### MME #############')
 
         crud.add_opioid_to_user_medlist(
             user,
@@ -219,7 +209,6 @@ def add():
             date_filled,
         )
 
-        print(user.med_list, user, '*********** user.med_list *********')
 
         return jsonify({'msg': 'medication added',}), 200
     else:
@@ -248,7 +237,6 @@ def get_users_med_list():
         #     db.joinedload('med_list')
         # ).get(session['user_id'])
         user = User.query.get(session['user_id'])
-        print(user.user_id, '**user*********')
 
         today = date.today()
         ago = today - timedelta(days=7)
@@ -257,7 +245,6 @@ def get_users_med_list():
                             Med.date_filled != None, 
                             Med.user_id== user.user_id,
                             ).all()
-        print(filtered_med_list, "FILTERED med_list*********************")
 
 
         if date_filled and end_date:
@@ -265,7 +252,6 @@ def get_users_med_list():
                 date_filled=date_filled,
                 end_date=end_date
             )
-            print(med_list, "med_list*********************")
         else:
             med_list = filtered_med_list
         
