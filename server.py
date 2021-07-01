@@ -93,7 +93,6 @@ def login():
     # chart descriptions
     today = date.today()
     ago = today - timedelta(days=7)
-    # month = datetime.now().month
     month = today.strftime("%B")
 
 
@@ -130,9 +129,6 @@ def show_user(user_id):
     if "user_id" in session:
         user = crud.get_user_by_id(user_id)
         
-        print(user, '****** USER ******')
-        print(user.med_list, '***** USER.MEDLIST **********')
-
 
         # chart descriptions
         today = date.today()
