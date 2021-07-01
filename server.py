@@ -133,7 +133,6 @@ def show_user(user_id):
         # chart descriptions
         today = date.today()
         ago = today - timedelta(days=7)
-        # month = datetime.now().month
         month = today.strftime("%B")
 
         return render_template('user_details.html', user=user, user_id=user_id, ago=ago, today=today, month=month)  
@@ -272,7 +271,6 @@ def get_users_med_list():
 
         return jsonify(med_list_json)            
             
-
 
 
 if __name__ == '__main__':
