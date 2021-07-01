@@ -130,7 +130,6 @@ const handleSaveList = (event) => {
 
     console.log(formData);
 
-    // sevenDay();
 
     // adds to user.med_list in db
     $.post('/add', formData, (response) => {
