@@ -26,9 +26,9 @@ def homepage():
     return render_template('homepage.html', user=user, user_id=user_id)
 
 
-@app.route('/resources')
-def resources_page():
-    """View resources page."""
+@app.route('/about')
+def about_page():
+    """View about page."""
 
     user_id = session.get('user_id')
     user = User.query.get(user_id)
