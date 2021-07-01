@@ -6,7 +6,7 @@ MME is a numerical standard for clinicians to gauge opioid addiction risk. It is
 
 This web app is designed for use by clinicians and by patients.
 
-For patients: Using this web app to calculate your MME will increase the transparency between you and your pain management. Understand your options and ways to improve your therapy by reading the clinical assessments based on your MME. Know what is an acceptable therapeutic range and when it may be time to consider a naloxone prescription, which could save your life in an accidental overdose situation. Be prepared. Know your risk. Take your control back.
+For patients: Using this web app to calculate your MME will increase the transparency between you and your pain management. Understand your options and ways to improve your therapy by reading the clinical assessments based on your MME. Know what is an acceptable therapeutic range and when it may be time to consider a naloxone prescription, which could save your life in an accidental overdose situation. Be prepared. Know your risk. Take control back.
 
 Per CDC: Calculating the MME of opioids helps identify patients who may benefit from closer monitoring, reduction or tapering of opioids, prescribing of naloxone, or other measures to reduce risk of overdose. 
 
