@@ -113,4 +113,9 @@
     margin-bottom: 25% !important;
   }
 
-  /* homepage med table */
+/* responsive images */
+.responsive {
+  width: auto;
+  height: auto;
+  background-size: contain;
+}
