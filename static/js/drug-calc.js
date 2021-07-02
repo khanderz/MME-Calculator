@@ -47,11 +47,12 @@ const displayClinicalAssessment = (MMETotal) => {
 
     if (MMETotal < 50) {
         $('#assessment').html(LOW_MME_MSG);
+        document.getElementById("assessment").style.color = "green";
     } else if (MMETotal >=50 && MMETotal < 90) {
         $('#assessment').html(MED_MME_MSG);
     } else {
         $('#assessment').html(HIGH_MME_MSG);
-        console.log(MMETotal, "******90******");
+        document.getElementById("assessment").style.color = "red";
     }
 };
 
