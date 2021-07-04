@@ -275,4 +275,4 @@ def get_users_med_list():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)
