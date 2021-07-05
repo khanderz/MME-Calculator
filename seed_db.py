@@ -31,7 +31,3 @@ opioids = [
 db.session.add_all(opioids)
 db.session.commit()
 print("Added opioids to DB")
-
-# user database
-
-# med list database
