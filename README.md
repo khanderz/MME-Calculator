@@ -38,10 +38,12 @@ Per CDC: Calculating the MME of opioids helps identify patients who may benefit 
 Weekly and monthly charts on the user dashboard displays 7-day and 30-day total daily MMEs. This feature allows the clinician/patient to assess when a person experienced one or more days in the last 7 days/30 days where their cumulative MME from opioid prescriptions exceeded 90 MME, increasing their risk of opioid addiction and/or accidental overdose.
 
 ## <a name="installation"></a>Installation: 
-`git clone https://github.com/khanderz/MME-Calculator.git`  
-`cd MME-calculator`  
-`pip3 install -r requirements.txt`  
-`python3 seed_db.py`  
+```
+git clone https://github.com/khanderz/MME-Calculator.git 
+cd MME-calculator
+pip3 install -r requirements.txt 
+python3 seed_db.py
+```
 
 ## Run program:
 `python3 server.py`
