@@ -51,8 +51,11 @@ Date filled is a required input for the charts.
 
 ## <a name="installation"></a>Installation: 
 ```git clone https://github.com/khanderz/MME-Calculator.git```
+
 ```cd MME-calculator```
+
 ```pip3 install -r requirements.txt```
+
 ```python3 seed_db.py```
 
 ## Run program:
