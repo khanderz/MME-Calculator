@@ -39,8 +39,7 @@ const calculateTotalMME = () => {
 
 // Display clinical assessment message based on total MME.
 const displayClinicalAssessment = (MMETotal) => {
-    console.log(MMETotal, '&&&&&&CLINICAL ASSESSMENT&&&&&');
-    
+   
     const LOW_MME_MSG = 'Acceptable therapeutic range; however, always use caution when prescribing opioids at any dosage and always prescribe the lowest effect dose';
     const MED_MME_MSG = 'Use extra precautions such as: monitor and assess pain and function more frequently; discuss reducing dose or tapering and discontinuing opioids if benefits do not outweigh harms; consider non-opioid alternatives; consider prescribing naloxone';
     const HIGH_MME_MSG = 'Avoid; carefully justify dose, increase monitoring, and/or consider prescribing naloxone';
