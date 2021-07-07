@@ -17,7 +17,7 @@ opioids = [
     Opioid(opioid_name="Fentanyl film/oral spray", conversion_factor=0.18),
     Opioid(opioid_name="Fentanyl nasal spray", conversion_factor=0.16),
     Opioid(opioid_name="Hydrocodone", conversion_factor=1),
-    Opioid(opioid_name="Hydrocodone", conversion_factor=4),
+    Opioid(opioid_name="Hydromorphone", conversion_factor=4),
     Opioid(opioid_name="Methadone 1-20mg", conversion_factor=4),
     Opioid(opioid_name="Methadone 21-40mg", conversion_factor=8),
     Opioid(opioid_name="Methadone 41-60mg", conversion_factor=10),
