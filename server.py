@@ -147,7 +147,7 @@ def show_user(user_id):
 def addMed():
     """ add med for non-logged in users"""
 
-    drug = request.args.get('drug')
+    drug = request.args.get('drug')   
     dose = decimal.Decimal(request.args.get('dose'))
     quantity = decimal.Decimal(request.args.get('quantity'))
     days_supply = decimal.Decimal(request.args.get('days_supply'))
@@ -275,4 +275,4 @@ def get_users_med_list():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=False)
