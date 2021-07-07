@@ -39,8 +39,11 @@ Weekly and monthly charts on the user dashboard displays 7-day and 30-day total 
 
 ## <a name="installation"></a>Installation: 
 ```git clone https://github.com/khanderz/MME-Calculator.git```
+
 ```cd MME-calculator```
+
 ```pip3 install -r requirements.txt```
+
 ```python3 seed_db.py```
 
 ## Run program:
