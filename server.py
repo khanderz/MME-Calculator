@@ -35,19 +35,15 @@ def about_page():
  
     return render_template('resources.html', user=user, user_id=user_id)
 
+
 @app.route('/updates')
 def updates_page():
     """View updates page."""
 
-
-@app.route('/about')
-def about_page():
-    """View about page."""
-
     user_id = session.get('user_id')
     user = User.query.get(user_id)
  
-    return render_template('updates.html', user=user, user_id=user_id)    
+    return render_template('updates.html', user=user, user_id=user_id) 
 
 
 # User routes
@@ -57,6 +53,7 @@ def render_create_user():
     user = User.query.get(user_id)
 
     return render_template('create_account.html', user_id=user_id)
+
 
 @app.route('/user_reg', methods=['POST'])
 def register_user():
@@ -289,4 +286,4 @@ def get_users_med_list():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=False)
