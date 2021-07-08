@@ -35,6 +35,20 @@ def about_page():
  
     return render_template('resources.html', user=user, user_id=user_id)
 
+@app.route('/updates')
+def updates_page():
+    """View updates page."""
+
+
+@app.route('/about')
+def about_page():
+    """View about page."""
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+ 
+    return render_template('updates.html', user=user, user_id=user_id)    
+
 
 # User routes
 @app.route('/create_user')
