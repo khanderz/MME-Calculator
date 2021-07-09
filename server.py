@@ -7,6 +7,7 @@ import crud
 import decimal
 from jinja2 import StrictUndefined
 from datetime import date, datetime, timedelta
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = "dev"
