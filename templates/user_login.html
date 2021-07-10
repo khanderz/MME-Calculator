@@ -6,9 +6,11 @@
 
     <div class="d-flex justify-content-center"> <h2>User login</h2> </div>
 
-    <div class="d-flex justify-content-center"> 
-        <form action="/user_login" method="POST">
+        <div class="text-center"> Don't have an account? <a href="/create_user"> Sign up! </a>
+        <br>
 
+        <form action="/user_login" method="POST">
+            <br>
             <p>
                 Email 
                 <input class="custom-input" type="text" name="email">
@@ -18,12 +20,15 @@
                 Password 
                 <input class="custom-input" type="password" name="password">
             </p>
-
+                <a href="/reset_page"> Forgot Password? </a>
+                <br>
+                <br>
             <p>
                 <input class="btn custom-button-1" type="submit" value="Login">
             </p>
 
         </form>
+
         </div>
 </body>
 

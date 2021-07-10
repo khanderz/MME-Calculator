@@ -16,6 +16,7 @@ app.jinja_env.undefined = StrictUndefined
 DATE_FORMAT = '%Y-%m-%d'
 
 
+
 #app routes and view functions
 @app.route('/')
 def homepage():
@@ -61,25 +62,32 @@ def register_user():
     """Create a new user."""
 
     email = request.form.get("email")
-    password = request.form.get("password")
+    pw1 = request.form.get("password1").encode("utf-8")
+    pw2 = request.form.get("password2").encode("utf-8")
 
-    user = crud.get_user_by_email(email)
+    if pw1 == pw2:
+        password_encoded = bcrypt.hashpw(pw1, bcrypt.gensalt())
+        # turn hashed password back into string to be stored in db
+        password = password_encoded.decode('utf-8')
+        print(password, "^^^^^^^^^^^^^store pw in db^^^^^^^^^^^")
 
-    if user:
-        user_id = session.get('user_id')
-        user = User.query.get(user_id)
+        user = crud.get_user_by_email(email)
 
-        flash("""Could not create account because an account with this email already
-               exists. Please try again.""")
-        return render_template('create_account.html', user_id=user_id)
-    else:
         crud.create_user(email, password)
 
         user_id = session.get('user_id')
         user = User.query.get(user_id)
-        
+            
         flash("Account created successfully! Please log in.")
         return render_template('user_login.html', user_id=user_id)
+
+    else:
+        flash('Passwords do not match. Please try again.')
+        user = crud.get_user_by_email(email)
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
+        return render_template('create_account.html', user_id=user_id)
+        
 
 
 @app.route('/login_page')
@@ -93,26 +101,41 @@ def render_login_page():
     
     return render_template('user_login.html', user_id=user_id)    
 
+
 @app.route('/user_login', methods=['POST'])
 def login():
     """Allow existing users to log in."""
 
     email = request.form.get("email")
-    password = request.form.get("password")
+    pw = request.form.get("password").encode("utf-8")
 
-    user = crud.get_user_by_email_and_password(email, password)
+    print(pw, "^^^^^^^^^^^^^pw^^^^^^^^^^^")
 
-    # chart descriptions
-    today = date.today()
-    ago = today - timedelta(days=7)
-    month = today.strftime("%B")
+    user_password = crud.get_user_password(email)
+    print(user_password, "^^^^^^^^^^^^^user pw^^^^^^^^^^^")
+
+    hashed2 = bcrypt.hashpw(pw, user_password.encode('utf-8'))
+    hashed2_str = hashed2.decode('utf-8')
+
+    if hashed2_str == user_password:
+        print("Password match!")
+        # Log the user in ...
+
+        user = crud.get_user_by_email_and_password(email, hashed2_str)
+
+        print(pw, "%%%%%%%%%% password %%%%%%%%%%%%")
+
+        # chart descriptions
+        today = date.today()
+        ago = today - timedelta(days=7)
+        month = today.strftime("%B")
 
 
-    if user:
         session["user_email"] = user.email
         session["user_id"] = user.user_id
         flash(f"Hello {user.email}! You are now logged in.")
-        return render_template('user_details.html', user=user, user_id=user.user_id, ago=ago, today=today, month=month)
+        return render_template('user_details.html', user=user, user_id=user.user_id, ago=ago, today=today, month=month) 
+
     else:
         user_id = session.get('user_id')
         user = User.query.get(user_id)
@@ -152,6 +175,22 @@ def show_user(user_id):
         flash("You are not currently logged in. Please login to view your dashboard.")
     
     return redirect('/')    
+
+
+@app.route('/reset_page')
+def render_reset_page():
+    """Render reset password page"""
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    return render_template('reset.html', user_id=user_id)
+
+
+@app.route('/reset', methods=['POST'])
+def reset_password(user):
+    """Reset user password"""    
+
+    pass
 
 
 # MME and drug routes
@@ -287,4 +326,4 @@ def get_users_med_list():
 
 if __name__ == '__main__':
     connect_to_db(app)
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=True)
