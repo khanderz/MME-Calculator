@@ -59,7 +59,16 @@ def updates_page():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
  
-    return render_template('updates.html', user=user, user_id=user_id) 
+    return render_template('updates.html', user=user, user_id=user_id)
+
+@app.route('/contact')
+def contacts_page():
+    """Render contacts page."""
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+ 
+    return render_template('contact.html', user=user, user_id=user_id)
 
 
 @app.route('/message_page')    
