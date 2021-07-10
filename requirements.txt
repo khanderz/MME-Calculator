@@ -3,7 +3,6 @@ blinker==1.4
 cffi==1.14.6
 click==8.0.1
 Flask==2.0.1
-Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.5.1
 greenlet==1.1.0
 itsdangerous==2.0.1
