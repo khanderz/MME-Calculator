@@ -51,6 +51,21 @@ def updates_page():
     return render_template('updates.html', user=user, user_id=user_id) 
 
 
+@app.route('/message_page')    
+def render_message_page():
+    """Render message page"""
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+ 
+    return render_template('message.html', user=user, user_id=user_id) 
+
+@app.route('/message', methods=['POST'])
+def send_message():
+    """Send message"""
+    pass    
+
+
 # User routes
 @app.route('/create_user')
 def render_create_user():
