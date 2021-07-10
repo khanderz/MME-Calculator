@@ -8,6 +8,7 @@ import decimal
 from jinja2 import StrictUndefined
 from datetime import date, datetime, timedelta
 import bcrypt
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -15,6 +16,16 @@ app.jinja_env.undefined = StrictUndefined
 
 DATE_FORMAT = '%Y-%m-%d'
 
+# flask_mail parameters
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'mmecalc@gmail.com'
+app.config['MAIL_PASSWORD'] = 'mmecalculation'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+# create Mail class instance
+mail = Mail(app)
 
 
 #app routes and view functions
@@ -63,6 +74,25 @@ def render_message_page():
 @app.route('/message', methods=['POST'])
 def send_message():
     """Send message"""
+
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    email = request.form.get("email")
+    # message_type = request.form.get("message_type")
+    message = request.form.get("message")
+    print(first_name, last_name, email, message, "*******user inputs")
+
+    msg = Message(sender = email, recipients = ['mmecalc@gmail.com'])
+    msg.body = "Message from" + " " + first_name + " " + last_name + " " + email + " " + "message:" + " " + message
+    mail.send(msg)
+
+    flash('Message submitted.')
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+ 
+    return render_template('message.html', user=user, user_id=user_id) 
+
+    
     pass    
 
 
@@ -87,7 +117,6 @@ def register_user():
         password_encoded = bcrypt.hashpw(pw1, bcrypt.gensalt())
         # turn hashed password back into string to be stored in db
         password = password_encoded.decode('utf-8')
-        print(password, "^^^^^^^^^^^^^store pw in db^^^^^^^^^^^")
 
         user = crud.get_user_by_email(email)
 
@@ -127,10 +156,7 @@ def login():
     email = request.form.get("email")
     pw = request.form.get("password").encode("utf-8")
 
-    print(pw, "^^^^^^^^^^^^^pw^^^^^^^^^^^")
-
     user_password = crud.get_user_password(email)
-    print(user_password, "^^^^^^^^^^^^^user pw^^^^^^^^^^^")
 
     hashed2 = bcrypt.hashpw(pw, user_password.encode('utf-8'))
     hashed2_str = hashed2.decode('utf-8')
@@ -140,8 +166,6 @@ def login():
         # Log the user in ...
 
         user = crud.get_user_by_email_and_password(email, hashed2_str)
-
-        print(pw, "%%%%%%%%%% password %%%%%%%%%%%%")
 
         # chart descriptions
         today = date.today()
@@ -226,10 +250,8 @@ def change_password():
     old_password = request.form.get("old_pw")
     new_password = request.form.get("new_pw").encode('utf-8')
     new_password2 = request.form.get("new_pw2").encode('utf-8')
-    print(old_password, new_password, new_password2, "^^^^^^^^^^^^user inputs")
 
     user_old_password = crud.get_user_password(email)
-    print(user_old_password, "@@@@@@@@@@@@@@ OLD PASSWORD")
 
     if user_old_password == old_password:
         print("%%%%%%%%%%%%%%%%%passwords match!%%%%%%%%%%%%%%")
@@ -237,7 +259,6 @@ def change_password():
         if new_password == new_password2:
             password_encoded = bcrypt.hashpw(new_password, bcrypt.gensalt())
             password = password_encoded.decode('utf-8')
-            print(password, "^^^^^^^^^^^^^store pw in db^^^^^^^^^^^")
 
             user = crud.get_user_by_email(email)
 
