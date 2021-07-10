@@ -49,6 +49,19 @@ def get_user_by_email_and_password(email, password):
             return user
     else:
         return None
+
+def change_user_password(email, password):
+    """Change user password and save new password"""
+
+    user = get_user_by_email(email) 
+    User.query.filter(User.email == email).update(
+        {
+            "password" : password
+        }
+    )      
+    db.session.commit()
+
+    return user
     
 # MME and drug functions
 def get_opioid_by_name(opioid_name):

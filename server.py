@@ -62,8 +62,8 @@ def register_user():
     """Create a new user."""
 
     email = request.form.get("email")
-    pw1 = request.form.get("password1").encode("utf-8")
-    pw2 = request.form.get("password2").encode("utf-8")
+    pw1 = request.form.get("password1").encode('utf-8')
+    pw2 = request.form.get("password2").encode('utf-8')
 
     if pw1 == pw2:
         password_encoded = bcrypt.hashpw(pw1, bcrypt.gensalt())
@@ -191,6 +191,58 @@ def reset_password(user):
     """Reset user password"""    
 
     pass
+
+
+@app.route('/change_pw_page')
+def render_change_pw_page():
+    """Render change password page"""
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    return render_template('change_password.html', user_id=user_id)
+
+@app.route('/change_pw', methods=['POST'])
+def change_password():
+    """Check old password and change it to new password"""
+    email = request.form.get("email")
+    old_password = request.form.get("old_pw")
+    new_password = request.form.get("new_pw").encode('utf-8')
+    new_password2 = request.form.get("new_pw2").encode('utf-8')
+    print(old_password, new_password, new_password2, "^^^^^^^^^^^^user inputs")
+
+    user_old_password = crud.get_user_password(email)
+    print(user_old_password, "@@@@@@@@@@@@@@ OLD PASSWORD")
+
+    if user_old_password == old_password:
+        print("%%%%%%%%%%%%%%%%%passwords match!%%%%%%%%%%%%%%")
+        
+        if new_password == new_password2:
+            password_encoded = bcrypt.hashpw(new_password, bcrypt.gensalt())
+            password = password_encoded.decode('utf-8')
+            print(password, "^^^^^^^^^^^^^store pw in db^^^^^^^^^^^")
+
+            user = crud.get_user_by_email(email)
+
+            crud.change_user_password(email, password)
+
+            user_id = session.get('user_id')
+            user = User.query.get(user_id)
+
+            flash('Password changed successfully. Please log in.')
+            return render_template('user_login.html', user_id=user_id)
+
+        else:
+            user_id = session.get('user_id')
+            user = User.query.get(user_id)
+            flash('New passwords do not match. Please try again.')
+            return render_template('change_password.html', user_id=user_id) 
+
+    else:
+        user_id = session.get('user_id')
+        user = User.query.get(user_id)
+        flash("Please enter the correct email and old password")
+        return render_template('change_password.html', user_id=user_id)   
+
 
 
 # MME and drug routes

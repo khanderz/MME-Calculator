@@ -20,7 +20,7 @@ class User(db.Model):
     med_list = db.relationship("Med", backref="user")  
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email} med_lists={self.med_list}>'
+        return f'<User user_id={self.user_id} email={self.email} password={self.password} med_lists={self.med_list}>'
     
     def get_meds_by_date_range(self, date_filled, end_date):    
         """Takes in a date_filled and end_date and returns a list of med items that fit within the date range.
