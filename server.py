@@ -1,7 +1,7 @@
 """Server for MME calculator app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect, jsonify)
+                   redirect, jsonify, Markup)
 from model import connect_to_db, db, User, Med, Opioid
 import crud
 import decimal
@@ -21,6 +21,9 @@ DATE_FORMAT = '%Y-%m-%d'
 @app.route('/')
 def homepage():
     """View homepage."""
+
+    # temporary flash
+    flash(Markup('New security measures have been implemented on July 10, 2021. Please change your password <a href="/change_pw_page">here</a>.'))
 
     user_id = session.get('user_id')
     user = User.query.get(user_id)
