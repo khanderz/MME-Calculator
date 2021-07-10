@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="d-flex justify-content-center"> <h2>Password reset</h2> </div>
+
+<div class="text-center"> 
+    <form action="/reset" method="POST">
+        <p>
+            Email 
+            <input class="custom-input" type="text" name="email">
+        </p>
+
+        <p>
+            <input class="btn custom-button-1" type="submit" value="Send Password Reset Link">
+        </p>
+
+    </form>
+</div>
+
+
+
+{% endblock %}
