@@ -13,7 +13,7 @@ Per CDC: Calculating the MME of opioids helps identify patients who may benefit 
 *There is no completely safe opioid dose, and this calculator does not substitute for clinical judgment. Use caution when prescribing opioids at any dosage, and prescribe the lowest effective dose.*
 
 ## Deployment:
-httsp://mme-calc.com
+https://mme-calc.com
 
 
 ## Contents
