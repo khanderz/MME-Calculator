@@ -20,7 +20,7 @@
 
          
   
-                Drug
+                Drug*
                 <form name="drug-form" id="drug-form">
                   <select name="drug" id="drug">
                     <option value="Codeine">Codeine</option>
@@ -42,17 +42,17 @@
                   <br>
                   <br>
 
-                  Total Daily Dose<br>
+                  Total Daily Dose*<br>
                   <input class="custom-input" type="text" name="dose" id="dose"> in mg (mcg for Fentanyl)
                   <br>
                   <br>
 
-                  Quantity<br>
+                  Quantity*<br>
                   <input class="custom-input" type="text" name="quantity" id="quantity">
                   <br>
                   <br>
 
-                  Days Supply<br>
+                  Days Supply*<br>
                   <input class="custom-input" type="text" name="days_supply" id="days_supply">
                   <br>
                   <br>
@@ -60,8 +60,9 @@
                   Date Filled<br>
                   <input class="custom-input" type="datetime" name="date_filled" id="date_filled"> (format YYYY-MM-DD) 
                   <br>
-                  <br>
 
+                  *Required fields
+                  <br>
 
                   <input class="btn custom-button-1" id='calculate-button' type="submit" value="Add med" form="drug-form">
 
@@ -128,6 +129,8 @@
             <i>
               *There is no completely safe opioid dose, and this calculator does not substitute for clinical judgment. Use caution when prescribing opioids at any dosage, and prescribe the lowest effective dose.*
             </i>
+            <br>
+            <a href="/about">[1]</a> Opioid conversion factors sourced from CDC.
           </p>
       </form>
 

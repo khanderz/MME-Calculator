@@ -100,7 +100,7 @@ def send_message():
     user = User.query.get(user_id)
  
     return render_template('message.html', user=user, user_id=user_id) 
-    
+
 
 # User routes
 @app.route('/create_user')
