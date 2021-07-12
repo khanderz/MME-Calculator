@@ -9,6 +9,7 @@ from jinja2 import StrictUndefined
 from datetime import date, datetime, timedelta
 import bcrypt
 from flask_mail import Mail, Message
+import os
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -19,8 +20,8 @@ DATE_FORMAT = '%Y-%m-%d'
 # flask_mail parameters
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'mmecalc@gmail.com'
-app.config['MAIL_PASSWORD'] = 'mmecalculation'
+app.config['MAIL_USERNAME'] = os.environ['MAIL_USER']
+app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASS']
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
